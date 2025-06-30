@@ -1,4 +1,3 @@
-/* Reset and base */
 * {
   margin: 0;
   padding: 0;
@@ -9,9 +8,9 @@ body {
   font-family: 'Segoe UI', sans-serif;
   color: white;
   overflow-x: hidden;
+  background: black;
 }
 
-/* Canvas background */
 #bg {
   position: fixed;
   top: 0;
@@ -22,7 +21,6 @@ body {
   background: black;
 }
 
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -72,7 +70,6 @@ nav a {
   color: white;
 }
 
-/* Hero Section */
 .hero {
   text-align: center;
   padding: 5em 2em;
@@ -110,7 +107,6 @@ nav a {
   font-size: 0.9em;
 }
 
-/* Featured Section */
 .featured-section {
   padding: 60px 20px;
   text-align: center;
@@ -161,4 +157,63 @@ nav a {
   position: absolute;
   top: 10px;
   left: 10px;
+}
+
+.scripthub-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 1em;
+}
+
+.scripts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.script-card {
+  background: #2b2b2b;
+  border-radius: 8px;
+  padding: 1em;
+  text-align: left;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.script-card h4 {
+  margin-bottom: 0.3em;
+  color: #6d82ff;
+}
+
+.script-card p {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-bottom: 0.6em;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1em;
+}
+
+.notification {
+  color: #ccc;
+  margin-top: 1em;
 }
