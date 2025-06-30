@@ -13,7 +13,7 @@
     <header>
       <nav>
         <a href="#">Home</a>
-        <a href="#">Downloads</a>
+        <a href="#" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">Downloads</a>
         <a href="#">Script Hub</a>
       </nav>
       <div class="actions">
@@ -23,14 +23,45 @@
     </header>
 
     <section class="hero">
-      <div class="badge">🔊 Website Just Realesed!</div>
+      <div class="badge">🔊 Website Just Released!</div>
       <h1>Welcome to <span>KozyStuff</span></h1>
-      <p>KozyStuff has Multiple Roblox helpful Tools!
- Any type of Ban done on you, will not be out promblem.</p>
+      <p>KozyStuff has Multiple Roblox helpful Tools!</p>
+      <p>Any type of ban done on you, will not be our problem.</p>
 
       <div class="cta">
         <button class="btn dark">Check It Out!</button>
-        <button class="btn">KozyWare Executor.</button>
+        <button class="btn" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">KozyWare Executor.</button>
+      </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section id="featured" class="featured-section">
+      <h2>Featured Collection</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="https://via.placeholder.com/300x180?text=Seliware" alt="Seliware" />
+          <span class="label">Group</span>
+          <h3>SELIWARE executor | Best...</h3>
+          <p>CHEAPKEYZ</p>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/300x180?text=Roblox" alt="Roblox" />
+          <span class="label">Group</span>
+          <h3>Rare Roblox Accounts</h3>
+          <p>CHEAPKEYZ</p>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/300x180?text=Aussie+Wire" alt="Aussie Wire" />
+          <span class="label">Group</span>
+          <h3>Aussie Wire [Powerful s...</h3>
+          <p>CHEAPKEYZ</p>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/300x180?text=Ronin+R" alt="Ronin" />
+          <span class="label">Group</span>
+          <h3>Ronin External</h3>
+          <p>CHEAPKEYZ</p>
+        </div>
       </div>
     </section>
   </body>
