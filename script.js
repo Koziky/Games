@@ -1,3 +1,4 @@
+// --- Particle Background ---
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
