@@ -1,0 +1,124 @@
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Canvas background */
+#bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 2em;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  font-weight: bold;
+  color: #6d82ff;
+  font-size: 1.5em;
+}
+
+nav a {
+  margin: 0 1em;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.cart {
+  background: #372c8d;
+  padding: 0.4em 0.8em;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.btn {
+  background-color: #6d82ff;
+  border: none;
+  color: white;
+  padding: 0.6em 1.4em;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #8196ff;
+}
+
+.btn.small {
+  padding: 0.4em 1em;
+  font-size: 0.85em;
+}
+
+.btn.dark {
+  background-color: #222;
+  color: white;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 5em 2em;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 0.2em;
+}
+
+.hero span {
+  color: #6d82ff;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: #ccc;
+  margin-bottom: 2em;
+}
+
+.cta button {
+  margin: 0 0.5em;
+}
+
+.badge {
+  background-color: #2d2d2d;
+  color: #aaa;
+  display: inline-block;
+  padding: 0.4em 1.2em;
+  border-radius: 999px;
+  margin-bottom: 1em;
+  font-weight: bold;
+  font-size: 0.9em;
+}
