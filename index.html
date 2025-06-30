@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>KozyStuff</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
@@ -10,7 +10,6 @@
   <body>
     <canvas id="bg"></canvas>
 
-    <!-- Header Navigation -->
     <header>
       <nav>
         <a href="#">Home</a>
@@ -23,7 +22,6 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
       <div class="badge">🔊 Website Just Released!</div>
       <h1>Welcome to <span>KozyStuff</span></h1>
@@ -36,7 +34,6 @@
       </div>
     </section>
 
-    <!-- Featured Collection -->
     <section id="featured" class="featured-section">
       <h2>Featured Collection</h2>
       <div class="card-grid">
@@ -44,24 +41,24 @@
           <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389349297216032788/image.png?ex=68644bdd&is=6862fa5d&hm=9c01cb196f41ea33491367eaa937eb0c2cb03a418d4a3f23c886fcb3ce0dab86&" alt="" />
           <span class="label">Executor</span>
           <h3>KozyWare</h3>
-          <p>Free! Roblox Executor.</p>
+          <p>Free! Roblox Executor. Warning, use with an alt. Has a ScriptHub, Settings, And a Tab System.</p>
         </div>
         <div class="card">
           <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389350506354180106/image.png?ex=68644cfd&is=6862fb7d&hm=524ec245d955014bae80a5fb217b189fe6291af04895388b82e40cf033d58a1c&" alt="" />
           <span class="label">Macro</span>
-          <h3>DIG Macro</h3>
-          <p>Roblox DIG Macro</p>
+          <h3>Macro</h3>
+          <p>DIG Macro. Predicts the Click. Small Chance of Getting Banned.</p>
         </div>
       </div>
     </section>
 
-    <!-- Script Hub Section -->
     <section id="scripthub" class="featured-section">
       <h2>Script Hub</h2>
       <div class="scripthub-container">
         <div class="search-box">
           <input id="searchInput" placeholder="Search scripts..." />
           <button id="searchBtn" class="btn small">Search</button>
+          <button id="trendingBtn" class="btn small">Show Trending</button>
         </div>
 
         <div id="scriptsContainer" class="scripts-grid"></div>
@@ -69,7 +66,7 @@
 
         <div class="pagination">
           <button id="prevPageBtn" class="btn small">Prev</button>
-          <span id="pageIndicator">Page 1/...</span>
+          <span id="pageIndicator">Page 1/…</span>
           <button id="nextPageBtn" class="btn small">Next</button>
         </div>
       </div>
