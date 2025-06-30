@@ -1,178 +1,193 @@
-// ===== Particle Background =====
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
+document.addEventListener("DOMContentLoaded", () => {
+  // ===== Particle Background =====
+  const canvas = document.getElementById("bg");
+  const ctx = canvas.getContext("2d");
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
-const particles = [];
-const connectionDistance = 100;
+  const particles = [];
+  const connectDist = 100;
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 1,
+      dx: (Math.random() - 0.5) * 0.7,
+      dy: (Math.random() - 0.5) * 0.7,
+    });
+  }
 
-for (let i = 0; i < 120; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: Math.random() * 2 + 1,
-    dx: (Math.random() - 0.5) * 0.7,
-    dy: (Math.random() - 0.5) * 0.7,
-  });
-}
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = "#6d82ff";
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "#6d82ff";
-    ctx.fill();
-
-    p.x += p.dx;
-    p.y += p.dy;
-
-    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-  });
-
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < connectionDistance) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(109,130,255, ${1 - dist / connectionDistance})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < connectDist) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(109,130,255,${1 - dist / connectDist})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
       }
+    }
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // ===== ScriptBlox Script Hub =====
+  const CORS_PROXY = "https://corsproxy.io/?";
+  const API_BASE = "https://scriptblox.com/api/script";
+  const scriptsContainer = document.getElementById("scriptsContainer");
+  const searchInput = document.getElementById("searchInput");
+  const searchBtn = document.getElementById("searchBtn");
+  const trendingBtn = document.getElementById("trendingBtn");
+  const notification = document.getElementById("notification");
+  const pageIndicator = document.getElementById("pageIndicator");
+  const prevPageBtn = document.getElementById("prevPageBtn");
+  const nextPageBtn = document.getElementById("nextPageBtn");
+
+  let mode = "fetch"; // fetch | search | trending
+  let query = "";
+  let page = 1;
+  const scriptsPerPage = 4;
+
+  function setNotification(msg) {
+    notification.textContent = msg;
+  }
+
+  async function fetchScripts() {
+    setNotification("Loading...");
+    scriptsContainer.innerHTML = "";
+
+    let endpoint = "";
+    if (mode === "fetch") {
+      endpoint = `${API_BASE}/fetch?page=${page}&max=${scriptsPerPage}`;
+    } else if (mode === "search") {
+      endpoint = `${API_BASE}/search?q=${encodeURIComponent(query)}&page=${page}&max=${scriptsPerPage}`;
+    } else if (mode === "trending") {
+      endpoint = `${API_BASE}/trending?max=${scriptsPerPage}`;
+    }
+
+    try {
+      const res = await fetch(`${CORS_PROXY}${endpoint}`);
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+
+      const data = await res.json();
+
+      const scripts = data.result?.scripts || [];
+
+      if (!scripts.length) {
+        setNotification("No scripts found.");
+        pageIndicator.textContent = "";
+        prevPageBtn.disabled = true;
+        nextPageBtn.disabled = true;
+        return;
+      }
+
+      renderScripts(scripts);
+
+      if (mode === "trending") {
+        pageIndicator.textContent = `Trending (${scripts.length})`;
+        prevPageBtn.disabled = true;
+        nextPageBtn.disabled = true;
+      } else {
+        const totalPages = data.result?.totalPages || 1;
+        pageIndicator.textContent = `Page ${page} of ${totalPages}`;
+        prevPageBtn.disabled = page <= 1;
+        nextPageBtn.disabled = page >= totalPages;
+      }
+
+      setNotification("");
+    } catch (err) {
+      console.error(err);
+      setNotification("Failed to fetch scripts.");
+      pageIndicator.textContent = "";
+      prevPageBtn.disabled = true;
+      nextPageBtn.disabled = true;
     }
   }
 
-  requestAnimationFrame(animate);
-}
-animate();
+  function renderScripts(scripts) {
+    scriptsContainer.innerHTML = "";
+    scripts.forEach(script => {
+      const card = document.createElement("div");
+      card.className = "script-card";
+      card.innerHTML = `
+        <h4>${script.title}</h4>
+        <p>${script.game?.name || "Unknown Game"}</p>
+        <button class="btn small">Copy Script</button>
+      `;
 
-window.addEventListener("resize", () => {
-  resizeCanvas();
-  renderScripts();
-});
+      const copyBtn = card.querySelector("button");
+      copyBtn.addEventListener("click", async () => {
+        try {
+          const rawRes = await fetch(`${CORS_PROXY}${API_BASE}/raw/${script._id}`);
+          if (!rawRes.ok) throw new Error(`HTTP error ${rawRes.status}`);
 
-// ===== Script Hub =====
-const scripts = [
-  {
-    name: "Infinite Yield",
-    description: "Powerful admin commands for Roblox.",
-    code: `loadstring(game:HttpGet("https://infiniteyield.xyz"))()`,
-  },
-  {
-    name: "Dex Explorer",
-    description: "Game exploration and manipulation tool.",
-    code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/ScriptExplorer/Dex/master/Dex.lua"))()`,
-  },
-  {
-    name: "Simple Spy",
-    description: "Remote spy to check remote calls.",
-    code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/Spy-Simple/Spy/master/SimpleSpy.lua"))()`,
-  },
-  {
-    name: "CMD-X",
-    description: "Command executor with lots of commands.",
-    code: `loadstring(game:HttpGet("https://pastebin.com/raw/cmdx"))()`,
-  },
-  {
-    name: "JJSploit",
-    description: "Classic script executor with GUI.",
-    code: `loadstring(game:HttpGet("https://jjsploit.com/script"))()`,
-  },
-];
+          const scriptText = await rawRes.text();
+          await navigator.clipboard.writeText(scriptText);
+          alert(`Script "${script.title}" copied to clipboard!`);
+        } catch (err) {
+          alert("Failed to copy script.");
+        }
+      });
 
-const scriptsContainer = document.getElementById("scriptsContainer");
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
-const notification = document.getElementById("notification");
-const pageIndicator = document.getElementById("pageIndicator");
-
-const nextPageBtn = document.getElementById("nextPageBtn");
-const prevPageBtn = document.getElementById("prevPageBtn");
-
-let currentPage = 1;
-const scriptsPerPage = 3;
-let filteredScripts = [...scripts];
-
-function renderScripts() {
-  scriptsContainer.innerHTML = "";
-  notification.textContent = "";
-
-  const startIndex = (currentPage - 1) * scriptsPerPage;
-  const endIndex = startIndex + scriptsPerPage;
-  const pageScripts = filteredScripts.slice(startIndex, endIndex);
-
-  if (pageScripts.length === 0) {
-    notification.textContent = "No scripts found.";
-    return;
+      scriptsContainer.appendChild(card);
+    });
   }
 
-  pageScripts.forEach(script => {
-    const card = document.createElement("div");
-    card.className = "script-card";
-
-    const btn = document.createElement("button");
-    btn.className = "btn small";
-    btn.textContent = "Copy";
-    btn.onclick = () => {
-      navigator.clipboard.writeText(script.code);
-      alert(`Copied ${script.name} to clipboard!`);
-    };
-
-    card.innerHTML = `
-      <h4>${script.name}</h4>
-      <p>${script.description}</p>
-    `;
-    card.appendChild(btn);
-    scriptsContainer.appendChild(card);
+  searchBtn.addEventListener("click", () => {
+    query = searchInput.value.trim();
+    if (!query) return;
+    mode = "search";
+    page = 1;
+    fetchScripts();
   });
 
-  const totalPages = Math.ceil(filteredScripts.length / scriptsPerPage);
-  pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
-}
+  searchInput.addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+      searchBtn.click();
+    }
+  });
 
-function searchScripts() {
-  const query = searchInput.value.trim().toLowerCase();
-  filteredScripts = scripts.filter(script =>
-    script.name.toLowerCase().includes(query) ||
-    script.description.toLowerCase().includes(query)
-  );
-  currentPage = 1;
-  renderScripts();
-}
+  prevPageBtn.addEventListener("click", () => {
+    if (page > 1) {
+      page--;
+      fetchScripts();
+    }
+  });
 
-function goToNextPage() {
-  const totalPages = Math.ceil(filteredScripts.length / scriptsPerPage);
-  if (currentPage < totalPages) {
-    currentPage++;
-    renderScripts();
-  }
-}
+  nextPageBtn.addEventListener("click", () => {
+    page++;
+    fetchScripts();
+  });
 
-function goToPrevPage() {
-  if (currentPage > 1) {
-    currentPage--;
-    renderScripts();
-  }
-}
+  trendingBtn.addEventListener("click", () => {
+    mode = "trending";
+    page = 1;
+    fetchScripts();
+  });
 
-searchBtn?.addEventListener("click", searchScripts);
-searchInput?.addEventListener("keypress", e => {
-  if (e.key === "Enter") searchScripts();
+  // Initial load
+  fetchScripts();
 });
-
-nextPageBtn?.addEventListener("click", goToNextPage);
-prevPageBtn?.addEventListener("click", goToPrevPage);
-
-renderScripts();
