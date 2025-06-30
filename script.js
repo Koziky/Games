@@ -8,6 +8,7 @@ canvas.height = window.innerHeight;
 const particles = [];
 const connectionDistance = 100;
 
+// Create particles
 for (let i = 0; i < 120; i++) {
   particles.push({
     x: Math.random() * canvas.width,
@@ -18,6 +19,7 @@ for (let i = 0; i < 120; i++) {
   });
 }
 
+// Animation loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -35,7 +37,7 @@ function animate() {
     if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
   });
 
-  // Draw connections
+  // Connect nearby particles
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
       const dx = particles[i].x - particles[j].x;
@@ -58,6 +60,7 @@ function animate() {
 
 animate();
 
+// Resize canvas on window change
 window.addEventListener("resize", () => {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
