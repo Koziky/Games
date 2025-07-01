@@ -20,6 +20,7 @@
         <a href="#" class="btn small">Discord</a>
       </div>
     </header>
+
     <section class="hero">
       <div class="badge">🔊 Website Just Released!</div>
       <h1>Welcome to <span>KozyStuff</span></h1>
@@ -30,23 +31,25 @@
         <button class="btn" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">KozyWare Executor.</button>
       </div>
     </section>
+
     <section id="featured" class="featured-section">
       <h2>Featured Collection</h2>
       <div class="card-grid">
         <div class="card">
-          <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389349297216032788/image.png?ex=68644bdd&is=6862fa5d&hm=9c01cb196f41ea33491367eaa937eb0c2cb03a418d4a3f23c886fcb3ce0dab86&" alt="" />
+          <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389349297216032788/image.png" alt="" />
           <span class="label">Executor</span>
           <h3>KozyWare</h3>
           <p>Free! Roblox Executor. Warning, use with an alt. Has a ScriptHub, Settings, And a Tab System.</p>
         </div>
         <div class="card">
-          <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389350506354180106/image.png?ex=68644cfd&is=6862fb7d&hm=524ec245d955014bae80a5fb217b189fe6291af04895388b82e40cf033d58a1c&" alt="" />
+          <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389350506354180106/image.png" alt="" />
           <span class="label">Macro</span>
           <h3>Macro</h3>
           <p>DIG Macro. Predicts the Click. Small Chance of Getting Banned.</p>
         </div>
       </div>
     </section>
+
     <section id="scripthub" class="featured-section">
       <h2>Script Hub</h2>
       <div class="scripthub-container">
@@ -71,5 +74,21 @@
         </div>
       </div>
     </section>
+
+    <!-- Popup UI -->
+    <div id="popupOverlay" class="popup-overlay">
+      <div class="popup-box">
+        <span id="popupClose" class="popup-close">×</span>
+        <div class="popup-content">
+          <img id="popupImage" class="popup-image" src="" alt="Script Image" />
+          <div class="popup-details">
+            <h3 id="popupTitle"></h3>
+            <p><strong>Uploaded:</strong> <span id="popupDate"></span></p>
+            <p><strong>Views:</strong> <span id="popupViews"></span></p>
+            <button id="popupCopyBtn" class="btn small">Copy Script</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
