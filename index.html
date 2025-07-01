@@ -9,7 +9,6 @@
   </head>
   <body>
     <canvas id="bg"></canvas>
-
     <header>
       <nav>
         <a href="#">Home</a>
@@ -21,19 +20,16 @@
         <a href="#" class="btn small">Discord</a>
       </div>
     </header>
-
     <section class="hero">
       <div class="badge">🔊 Website Just Released!</div>
       <h1>Welcome to <span>KozyStuff</span></h1>
       <p>KozyStuff has Multiple Roblox helpful Tools!</p>
       <p>Any type of ban done on you, will not be our problem.</p>
-
       <div class="cta">
         <button class="btn dark">Check It Out!</button>
         <button class="btn" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">KozyWare Executor.</button>
       </div>
     </section>
-
     <section id="featured" class="featured-section">
       <h2>Featured Collection</h2>
       <div class="card-grid">
@@ -51,7 +47,6 @@
         </div>
       </div>
     </section>
-
     <section id="scripthub" class="featured-section">
       <h2>Script Hub</h2>
       <div class="scripthub-container">
@@ -59,11 +54,16 @@
           <input id="searchInput" placeholder="Search scripts..." />
           <button id="searchBtn" class="btn small">Search</button>
           <button id="trendingBtn" class="btn small">Show Trending</button>
+          <button id="advancedBtn" class="btn small">Advanced Search</button>
         </div>
-
-        <div id="scriptsContainer" class="scripts-grid"></div>
+        <div class="advanced-panel" id="advancedPanel">
+          <label><input type="checkbox" id="filterKey"> Requires Key</label>
+          <label><input type="checkbox" id="filterVerified"> Verified</label>
+          <label><input type="checkbox" id="filterUniversal"> Universal</label>
+          <button class="btn small" id="applyFilters">Apply Filters</button>
+        </div>
         <div id="notification" class="notification"></div>
-
+        <div id="scriptsContainer" class="scripts-grid"></div>
         <div class="pagination">
           <button id="prevPageBtn" class="btn small">Prev</button>
           <span id="pageIndicator">Page 1/…</span>
