@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Particle background setup
   const canvas = document.getElementById("bg");
   const ctx = canvas.getContext("2d");
-  
+
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", resizeCanvas);
 
   const particles = [];
-  const connectDist = 100;
   for (let i = 0; i < 120; i++) {
     particles.push({
       x: Math.random() * canvas.width,
@@ -40,22 +38,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < connectDist) {
+        if (dist < 100) {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(109,130,255,${1 - dist / connectDist})`;
+          ctx.strokeStyle = `rgba(109,130,255,${1 - dist / 100})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
       }
     }
-
     requestAnimationFrame(animate);
   }
   animate();
 
-  // ScriptHub setup
   const CORS = "https://corsproxy.io/?";
   const API = "https://scriptblox.com/api/script";
   const container = document.getElementById("scriptsContainer");
@@ -68,30 +64,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prevPageBtn");
   const nextBtn = document.getElementById("nextPageBtn");
 
-  // Advanced Search UI
   const advPanel = document.getElementById("advancedPanel");
   const filterKey = document.getElementById("filterKey");
   const filterVerified = document.getElementById("filterVerified");
   const filterUniversal = document.getElementById("filterUniversal");
   const applyFilters = document.getElementById("applyFilters");
 
-  // Toggle advanced panel
+  const popupOverlay = document.getElementById("popupOverlay");
+  const popupClose = document.getElementById("popupClose");
+  const popupTitle = document.getElementById("popupTitle");
+  const popupImage = document.getElementById("popupImage");
+  const popupDate = document.getElementById("popupDate");
+  const popupViews = document.getElementById("popupViews");
+  const popupCopyBtn = document.getElementById("popupCopyBtn");
+
+  popupClose.onclick = () => {
+    popupOverlay.style.display = "none";
+  };
+
   advancedBtn.addEventListener("click", () => {
     advPanel.style.display = advPanel.style.display === "flex" ? "none" : "flex";
   });
 
   let page = 1;
-  const perPage = 4; // Show more scripts per page
+  const perPage = 4;
   let mode = "fetch";
   let query = "";
 
   function setNotification(text) {
     notification.textContent = text;
-    if (text === "Loading...") {
-      notification.classList.add("loading");
-    } else {
-      notification.classList.remove("loading");
-    }
+    notification.classList.toggle("loading", text === "Loading...");
   }
 
   async function load() {
@@ -145,50 +147,44 @@ document.addEventListener("DOMContentLoaded", () => {
         <h4>${s.title || "Untitled Script"}</h4>
         <p>${s.game?.name || "Universal Script"}</p>
         <div class="bottom-row">
-          <button class="copy-btn">Copy Script</button>
           <span class="key-status ${s.key ? 'has-key' : ''}">
             ${s.key ? '🔒 Key Required' : '✅ No Key'}
           </span>
         </div>
       `;
-      
-      const copyBtn = card.querySelector(".copy-btn");
-      copyBtn.addEventListener("click", async () => {
-        try {
-          copyBtn.textContent = "Copying...";
-          copyBtn.disabled = true;
-          
-          const raw = await fetch(CORS + `${API}/raw/${s._id}`);
-          const text = await raw.text();
-          await navigator.clipboard.writeText(text);
-          
-          // Show success feedback
-          copyBtn.textContent = "Copied!";
-          copyBtn.style.background = "linear-gradient(45deg, #4caf50, #66bb6a)";
-          
-          setTimeout(() => {
-            copyBtn.textContent = "Copy Script";
-            copyBtn.style.background = "";
-            copyBtn.disabled = false;
-          }, 2000);
-        } catch (error) {
-          console.error("Copy error:", error);
-          copyBtn.textContent = "Copy Failed";
-          copyBtn.style.background = "linear-gradient(45deg, #f44336, #ff6b6b)";
-          
-          setTimeout(() => {
-            copyBtn.textContent = "Copy Script";
-            copyBtn.style.background = "";
-            copyBtn.disabled = false;
-          }, 2000);
-        }
+      card.addEventListener("click", () => {
+        popupOverlay.style.display = "flex";
+        popupTitle.textContent = s.title || "Untitled Script";
+        popupImage.src = s.image || "https://via.placeholder.com/100";
+        popupDate.textContent = new Date(s.createdAt).toLocaleDateString();
+        popupViews.textContent = s.views ?? 0;
+
+        popupCopyBtn.textContent = "Copy Script";
+        popupCopyBtn.disabled = false;
+        popupCopyBtn.onclick = async () => {
+          try {
+            popupCopyBtn.textContent = "Copying...";
+            popupCopyBtn.disabled = true;
+
+            const raw = await fetch(CORS + `${API}/raw/${s._id}`);
+            const text = await raw.text();
+            await navigator.clipboard.writeText(text);
+
+            popupCopyBtn.textContent = "Copied!";
+            setTimeout(() => {
+              popupCopyBtn.textContent = "Copy Script";
+              popupCopyBtn.disabled = false;
+            }, 2000);
+          } catch (e) {
+            console.error(e);
+            popupCopyBtn.textContent = "Copy Failed";
+          }
+        };
       });
-      
       container.appendChild(card);
     });
   }
 
-  // Search functionality
   searchBtn.addEventListener("click", () => {
     query = searchInput.value.trim();
     if (!query) {
@@ -200,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
     load();
   });
 
-  // Trending functionality
   trendingBtn.addEventListener("click", () => {
     query = "";
     searchInput.value = "";
@@ -209,7 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
     load();
   });
 
-  // Apply filters
   applyFilters.addEventListener("click", () => {
     query = searchInput.value.trim();
     mode = "search";
@@ -218,14 +212,10 @@ document.addEventListener("DOMContentLoaded", () => {
     load();
   });
 
-  // Enter key search
   searchInput.addEventListener("keypress", e => {
-    if (e.key === "Enter") {
-      searchBtn.click();
-    }
+    if (e.key === "Enter") searchBtn.click();
   });
 
-  // Pagination
   prevBtn.addEventListener("click", () => {
     if (page > 1) {
       page--;
@@ -238,6 +228,5 @@ document.addEventListener("DOMContentLoaded", () => {
     load();
   });
 
-  // Load initial scripts
   load();
 });
