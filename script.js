@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== Particle Background =====
+  // Particle background setup
   const canvas = document.getElementById("bg");
   const ctx = canvas.getContext("2d");
-
+  
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function animateParticles() {
+  function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     particles.forEach(p => {
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = "#6d82ff";
       ctx.fill();
       p.x += p.dx;
@@ -50,144 +50,194 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     }
-    requestAnimationFrame(animateParticles);
-  }
-  animateParticles();
 
-  // ===== ScriptBlox Script Hub =====
-  const CORS_PROXY = "https://corsproxy.io/?";
-  const API_BASE = "https://scriptblox.com/api/script";
-  const scriptsContainer = document.getElementById("scriptsContainer");
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // ScriptHub setup
+  const CORS = "https://corsproxy.io/?";
+  const API = "https://scriptblox.com/api/script";
+  const container = document.getElementById("scriptsContainer");
   const searchInput = document.getElementById("searchInput");
   const searchBtn = document.getElementById("searchBtn");
   const trendingBtn = document.getElementById("trendingBtn");
+  const advancedBtn = document.getElementById("advancedBtn");
   const notification = document.getElementById("notification");
   const pageIndicator = document.getElementById("pageIndicator");
-  const prevPageBtn = document.getElementById("prevPageBtn");
-  const nextPageBtn = document.getElementById("nextPageBtn");
+  const prevBtn = document.getElementById("prevPageBtn");
+  const nextBtn = document.getElementById("nextPageBtn");
 
-  let mode = "fetch"; // fetch | search | trending
-  let query = "";
+  // Advanced Search UI
+  const advPanel = document.getElementById("advancedPanel");
+  const filterKey = document.getElementById("filterKey");
+  const filterVerified = document.getElementById("filterVerified");
+  const filterUniversal = document.getElementById("filterUniversal");
+  const applyFilters = document.getElementById("applyFilters");
+
+  // Toggle advanced panel
+  advancedBtn.addEventListener("click", () => {
+    advPanel.style.display = advPanel.style.display === "flex" ? "none" : "flex";
+  });
+
   let page = 1;
-  const scriptsPerPage = 4;
+  const perPage = 4; // Show more scripts per page
+  let mode = "fetch";
+  let query = "";
 
-  function setNotification(msg) {
-    notification.textContent = msg;
+  function setNotification(text) {
+    notification.textContent = text;
+    if (text === "Loading...") {
+      notification.classList.add("loading");
+    } else {
+      notification.classList.remove("loading");
+    }
   }
 
-  async function fetchScripts() {
+  async function load() {
     setNotification("Loading...");
-    scriptsContainer.innerHTML = "";
+    container.innerHTML = "";
 
-    let endpoint = "";
+    let url;
     if (mode === "fetch") {
-      endpoint = `${API_BASE}/fetch?page=${page}&max=${scriptsPerPage}`;
-    } else if (mode === "search") {
-      endpoint = `${API_BASE}/search?q=${encodeURIComponent(query)}&page=${page}&max=${scriptsPerPage}`;
-    } else if (mode === "trending") {
-      endpoint = `${API_BASE}/trending?max=${scriptsPerPage}`;
+      url = `${API}/fetch?page=${page}&max=${perPage}`;
+    } else {
+      const filters = [];
+      if (filterKey.checked) filters.push("key=1");
+      if (filterVerified.checked) filters.push("verified=1");
+      if (filterUniversal.checked) filters.push("universal=1");
+      const filterStr = filters.length ? `&${filters.join("&")}` : "";
+      url = `${API}/search?q=${encodeURIComponent(query)}&page=${page}&max=${perPage}${filterStr}`;
     }
 
     try {
-      const res = await fetch(`${CORS_PROXY}${endpoint}`);
-      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-
+      const res = await fetch(CORS + url);
       const data = await res.json();
+      const list = data.result?.scripts || [];
 
-      const scripts = data.result?.scripts || [];
-
-      if (!scripts.length) {
+      if (!list.length) {
         setNotification("No scripts found.");
         pageIndicator.textContent = "";
-        prevPageBtn.disabled = true;
-        nextPageBtn.disabled = true;
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
         return;
       }
 
-      renderScripts(scripts);
+      render(list);
 
-      if (mode === "trending") {
-        pageIndicator.textContent = `Trending (${scripts.length})`;
-        prevPageBtn.disabled = true;
-        nextPageBtn.disabled = true;
-      } else {
-        const totalPages = data.result?.totalPages || 1;
-        pageIndicator.textContent = `Page ${page} of ${totalPages}`;
-        prevPageBtn.disabled = page <= 1;
-        nextPageBtn.disabled = page >= totalPages;
-      }
-
+      const total = data.result?.totalPages ?? 1;
+      pageIndicator.textContent = `Page ${page} of ${total}`;
+      prevBtn.disabled = page <= 1;
+      nextBtn.disabled = page >= total;
       setNotification("");
-    } catch (err) {
-      console.error(err);
-      setNotification("Failed to fetch scripts.");
-      pageIndicator.textContent = "";
-      prevPageBtn.disabled = true;
-      nextPageBtn.disabled = true;
+    } catch (error) {
+      console.error("Fetch error:", error);
+      setNotification("Failed to fetch scripts. Please try again.");
     }
   }
 
-  function renderScripts(scripts) {
-    scriptsContainer.innerHTML = "";
-    scripts.forEach(script => {
+  function render(list) {
+    container.innerHTML = "";
+    list.forEach(s => {
       const card = document.createElement("div");
       card.className = "script-card";
       card.innerHTML = `
-        <h4>${script.title}</h4>
-        <p>${script.game?.name || "Unknown Game"}</p>
-        <button class="btn small">Copy Script</button>
+        <h4>${s.title || "Untitled Script"}</h4>
+        <p>${s.game?.name || "Universal Script"}</p>
+        <div class="bottom-row">
+          <button class="copy-btn">Copy Script</button>
+          <span class="key-status ${s.key ? 'has-key' : ''}">
+            ${s.key ? '🔒 Key Required' : '✅ No Key'}
+          </span>
+        </div>
       `;
-
-      const copyBtn = card.querySelector("button");
+      
+      const copyBtn = card.querySelector(".copy-btn");
       copyBtn.addEventListener("click", async () => {
         try {
-          const rawRes = await fetch(`${CORS_PROXY}${API_BASE}/raw/${script._id}`);
-          if (!rawRes.ok) throw new Error(`HTTP error ${rawRes.status}`);
-
-          const scriptText = await rawRes.text();
-          await navigator.clipboard.writeText(scriptText);
-          alert(`Script "${script.title}" copied to clipboard!`);
-        } catch (err) {
-          alert("Failed to copy script.");
+          copyBtn.textContent = "Copying...";
+          copyBtn.disabled = true;
+          
+          const raw = await fetch(CORS + `${API}/raw/${s._id}`);
+          const text = await raw.text();
+          await navigator.clipboard.writeText(text);
+          
+          // Show success feedback
+          copyBtn.textContent = "Copied!";
+          copyBtn.style.background = "linear-gradient(45deg, #4caf50, #66bb6a)";
+          
+          setTimeout(() => {
+            copyBtn.textContent = "Copy Script";
+            copyBtn.style.background = "";
+            copyBtn.disabled = false;
+          }, 2000);
+        } catch (error) {
+          console.error("Copy error:", error);
+          copyBtn.textContent = "Copy Failed";
+          copyBtn.style.background = "linear-gradient(45deg, #f44336, #ff6b6b)";
+          
+          setTimeout(() => {
+            copyBtn.textContent = "Copy Script";
+            copyBtn.style.background = "";
+            copyBtn.disabled = false;
+          }, 2000);
         }
       });
-
-      scriptsContainer.appendChild(card);
+      
+      container.appendChild(card);
     });
   }
 
+  // Search functionality
   searchBtn.addEventListener("click", () => {
     query = searchInput.value.trim();
-    if (!query) return;
+    if (!query) {
+      setNotification("Please enter a search term.");
+      return;
+    }
     mode = "search";
     page = 1;
-    fetchScripts();
+    load();
   });
 
+  // Trending functionality
+  trendingBtn.addEventListener("click", () => {
+    query = "";
+    searchInput.value = "";
+    mode = "fetch";
+    page = 1;
+    load();
+  });
+
+  // Apply filters
+  applyFilters.addEventListener("click", () => {
+    query = searchInput.value.trim();
+    mode = "search";
+    page = 1;
+    advPanel.style.display = "none";
+    load();
+  });
+
+  // Enter key search
   searchInput.addEventListener("keypress", e => {
     if (e.key === "Enter") {
       searchBtn.click();
     }
   });
 
-  prevPageBtn.addEventListener("click", () => {
+  // Pagination
+  prevBtn.addEventListener("click", () => {
     if (page > 1) {
       page--;
-      fetchScripts();
+      load();
     }
   });
 
-  nextPageBtn.addEventListener("click", () => {
+  nextBtn.addEventListener("click", () => {
     page++;
-    fetchScripts();
+    load();
   });
 
-  trendingBtn.addEventListener("click", () => {
-    mode = "trending";
-    page = 1;
-    fetchScripts();
-  });
-
-  // Initial load
-  fetchScripts();
+  // Load initial scripts
+  load();
 });
