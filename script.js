@@ -1,4 +1,3 @@
-// Modern Login Page JavaScript
 class LoginManager {
   constructor() {
     this.init();
@@ -72,7 +71,6 @@ class LoginManager {
       await this.simulateLogin(email, password, remember);
       this.showToast('Login successful! Redirecting...', 'success');
       setTimeout(() => {
-        console.log('Redirecting to dashboard...');
         // window.location.href = '/dashboard'; // Uncomment for real redirect
       }, 1500);
     } catch (err) {
@@ -95,7 +93,6 @@ class LoginManager {
     this.showToast(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login clicked`, 'success');
     const button = document.getElementById(`${provider}Btn`);
     this.addClickAnimation(button);
-    console.log(`Initiating ${provider} login...`);
   }
 
   handleInputFocus(e) {
@@ -190,34 +187,4 @@ class LoginManager {
 
 document.addEventListener('DOMContentLoaded', () => {
   new LoginManager();
-
-  // Example credentials helper UI
-  const exampleHelper = document.createElement('div');
-  exampleHelper.innerHTML = `
-    <div style="
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-size: 12px;
-        z-index: 1000;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      ">
-      <strong>Example Credentials:</strong><br>
-      Email: example@example.com<br>
-      Password: password
-    </div>`;
-  document.body.appendChild(exampleHelper);
-  setTimeout(() => {
-    exampleHelper.style.opacity = '0';
-    exampleHelper.style.transform = 'translateY(100%)';
-    setTimeout(() => exampleHelper.remove(), 300);
-  }, 10000);
-
-  console.log('🚀 Modern Login Page Loaded Successfully!');
-  console.log('📧 Example: example@example.com | 🔑 Password: password');
 });
