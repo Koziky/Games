@@ -18,9 +18,6 @@ class LoginManager {
     const loginForm = document.getElementById('loginForm');
     loginForm?.addEventListener('submit', (e) => this.handleLogin(e));
 
-    document.getElementById('googleBtn')?.addEventListener('click', () => this.handleSocialLogin('google'));
-    document.getElementById('githubBtn')?.addEventListener('click', () => this.handleSocialLogin('github'));
-
     const inputs = document.querySelectorAll('.form-input');
     inputs.forEach(input => {
       input.addEventListener('focus', e => this.handleInputFocus(e));
@@ -51,13 +48,13 @@ class LoginManager {
   async handleLogin(e) {
     e.preventDefault();
 
-    const email = document.getElementById('email').value.trim();
+    const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const remember = document.getElementById('remember').checked;
     const submitBtn = document.querySelector('.login-btn');
 
-    if (!this.validateEmail(email)) {
-      this.showToast('Please enter a valid email address', 'error');
+    if (!this.validateUsername(username)) {
+      this.showToast('Username must be 1–12 letters or numbers only', 'error');
       return;
     }
     if (password.length < 6) {
@@ -68,7 +65,7 @@ class LoginManager {
     this.setLoading(submitBtn, true);
 
     try {
-      await this.simulateLogin(email, password, remember);
+      await this.simulateLogin(username, password, remember);
       this.showToast('Login successful! Redirecting...', 'success');
       setTimeout(() => {
         // window.location.href = '/dashboard'; // Uncomment for real redirect
@@ -80,19 +77,18 @@ class LoginManager {
     }
   }
 
-  async simulateLogin(email, password, remember) {
+  async simulateLogin(username, password, remember) {
     await new Promise(r => setTimeout(r, 2000));
-    if (email === 'example@example.com' && password === 'password') {
+    if (username === 'exampleuser' && password === 'password') {
       if (remember) localStorage.setItem('rememberUser', 'true');
       return { success: true, token: 'fake-jwt-token' };
     }
-    throw new Error('Invalid email or password');
+    throw new Error('Invalid username or password');
   }
 
-  handleSocialLogin(provider) {
-    this.showToast(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login clicked`, 'success');
-    const button = document.getElementById(`${provider}Btn`);
-    this.addClickAnimation(button);
+  validateUsername(username) {
+    const re = /^[a-zA-Z0-9]{1,12}$/;
+    return re.test(username);
   }
 
   handleInputFocus(e) {
@@ -115,11 +111,6 @@ class LoginManager {
       button.classList.remove('loading');
       button.disabled = false;
     }
-  }
-
-  validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
   }
 
   showToast(message, type = 'success') {
@@ -153,15 +144,8 @@ class LoginManager {
     setTimeout(() => ripple.remove(), 600);
   }
 
-  addClickAnimation(element) {
-    element.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      element.style.transform = '';
-    }, 150);
-  }
-
   setupAnimations() {
-    const formElements = document.querySelectorAll('.form-group, .form-options, .login-btn, .social-buttons');
+    const formElements = document.querySelectorAll('.form-group, .form-options, .login-btn');
     formElements.forEach((el, i) => {
       el.style.animationDelay = `${i * 0.1}s`;
       el.classList.add('fade-in-up');
@@ -175,16 +159,4 @@ class LoginManager {
         shapes.forEach((shape, i) => {
           const speed = (i + 1) * 0.5;
           const xOffset = (x - 0.5) * speed * 20;
-          const yOffset = (y - 0.5) * speed * 20;
-          shape.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-        });
-      });
-    }
-
-    setTimeout(() => document.getElementById('email')?.focus(), 500);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  new LoginManager();
-});
+          const yOffset = (y - 
