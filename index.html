@@ -2,134 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Modern Auth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koziky Auth</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script defer src="script.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="login-container">
-    <div class="auth-wrapper" id="authWrapper">
-      <div class="auth-slider">
-        <!-- Login Card -->
-        <div class="login-card auth-card">
-          <div class="login-header">
-            <div class="logo-icon"><i class="fas fa-lock"></i></div>
-            <h1 class="login-title">Welcome Back</h1>
-            <p class="login-subtitle">Sign in to your account to continue</p>
-          </div>
-
-          <form class="login-form" id="loginForm">
-            <div class="form-group">
-              <label for="username" class="form-label">Username</label>
-              <div class="input-wrapper">
-                <i class="fas fa-user input-icon"></i>
-                <input type="text" id="username" class="form-input" placeholder="Enter your username" maxlength="12" required />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="password" class="form-label">Password</label>
-              <div class="input-wrapper">
-                <i class="fas fa-lock input-icon"></i>
-                <input type="password" id="password" class="form-input" placeholder="Enter your password" required />
-                <button type="button" class="password-toggle" id="passwordToggle"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-
-            <div class="form-options">
-              <label class="checkbox-wrapper">
-                <input type="checkbox" id="remember" />
-                <span class="checkmark"></span>
-                <span class="checkbox-text">Remember me</span>
-              </label>
-              <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="login-btn">
-              <span class="btn-text">Sign In</span>
-              <div class="btn-loader"><div class="spinner"></div></div>
-            </button>
-          </form>
-
-          <div class="signup-link">
-            Don't have an account? <a href="#" class="switch-to-signup">Sign up</a>
-          </div>
+  <div class="auth-container">
+    <div class="auth-panel left-panel">
+      <h2>Welcome Back</h2>
+      <form id="loginForm">
+        <div class="input-wrapper">
+          <input type="text" id="username" class="form-input" placeholder="Username" />
         </div>
-
-        <!-- Signup Card -->
-        <div class="login-card auth-card">
-          <div class="login-header">
-            <div class="logo-icon"><i class="fas fa-user-plus"></i></div>
-            <h1 class="login-title">Create Account</h1>
-            <p class="login-subtitle">Join us and start your journey</p>
-          </div>
-
-          <form class="login-form" id="signupForm">
-            <div class="form-group">
-              <label for="newUsername" class="form-label">Username</label>
-              <div class="input-wrapper">
-                <i class="fas fa-user input-icon"></i>
-                <input type="text" id="newUsername" class="form-input" placeholder="Choose a username" maxlength="12" required />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email" class="form-label">Email</label>
-              <div class="input-wrapper">
-                <i class="fas fa-envelope input-icon"></i>
-                <input type="email" id="email" class="form-input" placeholder="Enter your email" required />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="newPassword" class="form-label">Password</label>
-              <div class="input-wrapper">
-                <i class="fas fa-lock input-icon"></i>
-                <input type="password" id="newPassword" class="form-input" placeholder="Create a password" required />
-                <button type="button" class="password-toggle" id="newPasswordToggle"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <div class="input-wrapper">
-                <i class="fas fa-lock input-icon"></i>
-                <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required />
-              </div>
-            </div>
-
-            <button type="submit" class="login-btn">
-              <span class="btn-text">Sign Up</span>
-              <div class="btn-loader"><div class="spinner"></div></div>
-            </button>
-          </form>
-
-          <div class="signup-link">
-            Already have an account? <a href="#" class="switch-to-login">Sign in</a>
-          </div>
+        <div class="input-wrapper">
+          <input type="password" id="password" class="form-input" placeholder="Password" />
+          <span id="passwordToggle" class="password-toggle"><i class="fa fa-eye"></i></span>
         </div>
-      </div>
+        <div class="form-options">
+          <label><input type="checkbox" id="remember" /> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
     </div>
 
-    <div class="bg-animation">
-      <div class="floating-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
-      </div>
+    <div class="auth-panel right-panel">
+      <h2>Create Account</h2>
+      <form id="signupForm">
+        <div class="input-wrapper">
+          <input type="text" id="newUsername" class="form-input" placeholder="Username" />
+        </div>
+        <div class="input-wrapper">
+          <input type="email" id="email" class="form-input" placeholder="Email" />
+        </div>
+        <div class="input-wrapper">
+          <input type="password" id="newPassword" class="form-input" placeholder="Password" />
+          <span id="newPasswordToggle" class="password-toggle"><i class="fa fa-eye"></i></span>
+        </div>
+        <div class="input-wrapper">
+          <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password" />
+        </div>
+        <button type="submit" class="login-btn">Sign Up</button>
+      </form>
     </div>
   </div>
 
-  <div class="toast" id="toast">
-    <div class="toast-content">
-      <i class="toast-icon"></i>
-      <span class="toast-message"></span>
-    </div>
-  </div>
+  <div id="toast"><div class="toast-message"></div></div>
 
-  <script src="script.js"></script>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
 </body>
 </html>
