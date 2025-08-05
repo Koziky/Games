@@ -13,21 +13,32 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      margin: 0;
     }
+
     .container {
       background: #1a1a1a;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px #00ffcc;
+      box-shadow: 0 0 20px #00ffcc;
+      text-align: center;
+      width: 300px;
     }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
     input {
-      display: block;
-      margin: 10px 0;
+      width: 100%;
       padding: 10px;
-      width: 250px;
+      margin: 10px 0;
       border: none;
       border-radius: 5px;
+      background: #2a2a2a;
+      color: #fff;
     }
+
     button {
       padding: 10px 20px;
       background: #00ffcc;
@@ -35,7 +46,9 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      margin-top: 10px;
     }
+
     button:hover {
       background: #00ddb3;
     }
@@ -44,7 +57,7 @@
 <body>
   <div class="container">
     <h2>Sign Up for KozikyGame's</h2>
-    <input type="text" id="username" placeholder="Username">
+    <input type="text" id="username" placeholder="Username" maxlength="12">
     <input type="password" id="password" placeholder="Password">
     <button onclick="signup()">Sign Up</button>
   </div>
@@ -54,17 +67,22 @@
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
 
-      if (!username || !password) {
-        alert("Username and password can't be empty.");
+      const valid = /^[a-zA-Z0-9]{1,12}$/;
+      if (!valid.test(username)) {
+        alert("Username must be 1–12 English letters or numbers only.");
         return;
       }
 
-      // Save to localStorage
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+      }
+
       localStorage.setItem('koziky_username', username);
       localStorage.setItem('koziky_password', password);
 
       alert("Signup successful! You can now log in.");
-      window.location.href = "login.html"; // Redirect to login page
+      window.location.href = "login.html"; // Adjust if your login page has a different name
     }
   </script>
 </body>
