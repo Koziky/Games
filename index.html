@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login - Koziky Game's</title>
+  <title>Login - Modern Auth</title>
   <link rel="stylesheet" href="style.css" />
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -27,14 +27,15 @@
 
       <form class="login-form" id="loginForm">
         <div class="form-group">
-          <label for="email" class="form-label">Email</label>
+          <label for="username" class="form-label">Username</label>
           <div class="input-wrapper">
-            <i class="fas fa-envelope input-icon"></i>
+            <i class="fas fa-user input-icon"></i>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="username"
               class="form-input"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
+              maxlength="12"
               required
             />
           </div>
@@ -74,21 +75,6 @@
         </button>
       </form>
 
-      <div class="divider">
-        <span class="divider-text">Or continue with</span>
-      </div>
-
-      <div class="social-buttons">
-        <button class="social-btn google-btn" id="googleBtn">
-          <i class="fab fa-google social-icon"></i>
-          Google
-        </button>
-        <button class="social-btn github-btn" id="githubBtn">
-          <i class="fab fa-github social-icon"></i>
-          GitHub
-        </button>
-      </div>
-
       <div class="signup-link">
         Don't have an account? <a href="#" class="signup-btn">Sign up</a>
       </div>
@@ -114,4 +100,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
