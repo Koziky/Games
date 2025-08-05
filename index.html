@@ -1,94 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>KozyStuff</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <canvas id="bg"></canvas>
-    <header>
-      <nav>
-        <a href="#">Home</a>
-        <a href="#" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">Downloads</a>
-        <a href="#" onclick="document.getElementById('scripthub').scrollIntoView({ behavior: 'smooth' });">Script Hub</a>
-      </nav>
-      <div class="actions">
-        <a href="#" class="btn small">Support</a>
-        <a href="#" class="btn small">Discord</a>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <form class="login-form" id="loginForm">
+      <h2>Welcome Back</h2>
+      <p>Please login to your account</p>
 
-    <section class="hero">
-      <div class="badge">🔊 Website Just Released!</div>
-      <h1>Welcome to <span>KozyStuff</span></h1>
-      <p>KozyStuff has Multiple Roblox helpful Tools!</p>
-      <p>Any type of ban done on you, will not be our problem.</p>
-      <div class="cta">
-        <button class="btn dark">Check It Out!</button>
-        <button class="btn" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">KozyWare Executor.</button>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
       </div>
-    </section>
 
-    <section id="featured" class="featured-section">
-      <h2>Featured Collection</h2>
-      <div class="card-grid">
-        <div class="card">
-          <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389349297216032788/image.png" alt="" />
-          <span class="label">Executor</span>
-          <h3>KozyWare</h3>
-          <p>Free! Roblox Executor. Warning, use with an alt. Has a ScriptHub, Settings, And a Tab System.</p>
-        </div>
-        <div class="card">
-          <img src="https://cdn.discordapp.com/attachments/1381448994550714480/1389350506354180106/image.png" alt="" />
-          <span class="label">Macro</span>
-          <h3>Macro</h3>
-          <p>DIG Macro. Predicts the Click. Small Chance of Getting Banned.</p>
-        </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
       </div>
-    </section>
 
-    <section id="scripthub" class="featured-section">
-      <h2>Script Hub</h2>
-      <div class="scripthub-container">
-        <div class="search-box">
-          <input id="searchInput" placeholder="Search scripts..." />
-          <button id="searchBtn" class="btn small">Search</button>
-          <button id="trendingBtn" class="btn small">Show Trending</button>
-          <button id="advancedBtn" class="btn small">Advanced Search</button>
-        </div>
-        <div class="advanced-panel" id="advancedPanel">
-          <label><input type="checkbox" id="filterKey"> Requires Key</label>
-          <label><input type="checkbox" id="filterVerified"> Verified</label>
-          <label><input type="checkbox" id="filterUniversal"> Universal</label>
-          <button class="btn small" id="applyFilters">Apply Filters</button>
-        </div>
-        <div id="notification" class="notification"></div>
-        <div id="scriptsContainer" class="scripts-grid"></div>
-        <div class="pagination">
-          <button id="prevPageBtn" class="btn small">Prev</button>
-          <span id="pageIndicator">Page 1/…</span>
-          <button id="nextPageBtn" class="btn small">Next</button>
-        </div>
-      </div>
-    </section>
+      <button type="submit">Login</button>
 
-    <!-- Popup UI -->
-    <div id="popupOverlay" class="popup-overlay">
-      <div class="popup-box">
-        <span id="popupClose" class="popup-close">×</span>
-        <div class="popup-content">
-          <img id="popupImage" class="popup-image" src="" alt="Script Image" />
-          <div class="popup-details">
-            <h3 id="popupTitle"></h3>
-            <p><strong>Uploaded:</strong> <span id="popupDate"></span></p>
-            <p><strong>Views:</strong> <span id="popupViews"></span></p>
-            <button id="popupCopyBtn" class="btn small">Copy Script</button>
-          </div>
-        </div>
+      <div class="footer">
+        <a href="#">Forgot Password?</a>
+        <span>•</span>
+        <a href="#">Create Account</a>
       </div>
-    </div>
-  </body>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
