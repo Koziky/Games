@@ -84,7 +84,7 @@ class LoginManager {
 
   async simulateLogin(email, password, remember) {
     await new Promise(r => setTimeout(r, 2000));
-    if (email === 'demo@example.com' && password === 'password') {
+    if (email === 'example@example.com' && password === 'password') {
       if (remember) localStorage.setItem('rememberUser', 'true');
       return { success: true, token: 'fake-jwt-token' };
     }
@@ -191,9 +191,9 @@ class LoginManager {
 document.addEventListener('DOMContentLoaded', () => {
   new LoginManager();
 
-  // Demo credentials helper UI
-  const demoHelper = document.createElement('div');
-  demoHelper.innerHTML = `
+  // Example credentials helper UI
+  const exampleHelper = document.createElement('div');
+  exampleHelper.innerHTML = `
     <div style="
         position: fixed;
         bottom: 20px;
@@ -207,17 +207,17 @@ document.addEventListener('DOMContentLoaded', () => {
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
       ">
-      <strong>Demo Credentials:</strong><br>
-      Email: demo@example.com<br>
+      <strong>Example Credentials:</strong><br>
+      Email: example@example.com<br>
       Password: password
     </div>`;
-  document.body.appendChild(demoHelper);
+  document.body.appendChild(exampleHelper);
   setTimeout(() => {
-    demoHelper.style.opacity = '0';
-    demoHelper.style.transform = 'translateY(100%)';
-    setTimeout(() => demoHelper.remove(), 300);
+    exampleHelper.style.opacity = '0';
+    exampleHelper.style.transform = 'translateY(100%)';
+    setTimeout(() => exampleHelper.remove(), 300);
   }, 10000);
 
   console.log('🚀 Modern Login Page Loaded Successfully!');
-  console.log('📧 Demo: demo@example.com | 🔑 Password: password');
+  console.log('📧 Example: example@example.com | 🔑 Password: password');
 });
