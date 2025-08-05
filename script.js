@@ -9,21 +9,49 @@ class LoginManager {
   }
 
   bindEvents() {
+    // Password toggles
     const passwordToggle = document.getElementById('passwordToggle');
     const passwordInput = document.getElementById('password');
     passwordToggle?.addEventListener('click', () => {
       this.togglePassword(passwordInput, passwordToggle);
     });
 
+    const newPasswordToggle = document.getElementById('newPasswordToggle');
+    const newPasswordInput = document.getElementById('newPassword');
+    newPasswordToggle?.addEventListener('click', () => {
+      this.togglePassword(newPasswordInput, newPasswordToggle);
+    });
+
+    // Form submissions
     const loginForm = document.getElementById('loginForm');
     loginForm?.addEventListener('submit', (e) => this.handleLogin(e));
 
+    const signupForm = document.getElementById('signupForm');
+    signupForm?.addEventListener('submit', (e) => this.handleSignup(e));
+
+    // Input focus/blur styling
     const inputs = document.querySelectorAll('.form-input');
     inputs.forEach(input => {
       input.addEventListener('focus', e => this.handleInputFocus(e));
       input.addEventListener('blur', e => this.handleInputBlur(e));
     });
 
+    // Slide transition
+    const switchToSignup = document.querySelector('.switch-to-signup');
+    const switchToLogin = document.querySelector('.switch-to-login');
+    const authWrapper = document.getElementById('authWrapper');
+
+    switchToSignup?.addEventListener('click', (e) => {
+      e.preventDefault();
+      authWrapper.classList.add('slide-left');
+    });
+
+    switchToLogin?.addEventListener('click', (e) => {
+      e.preventDefault();
+      authWrapper.classList.remove('slide-left');
+    });
+
+    // Ctrl+Enter shortcut
     document.addEventListener('keydown', e => {
       if (e.key === 'Enter' && e.ctrlKey) {
         this.handleLogin(e);
@@ -35,12 +63,10 @@ class LoginManager {
     const icon = toggle.querySelector('i');
     if (input.type === 'password') {
       input.type = 'text';
-      icon.classList.remove('fa-eye');
-      icon.classList.add('fa-eye-slash');
+      icon.classList.replace('fa-eye', 'fa-eye-slash');
     } else {
       input.type = 'password';
-      icon.classList.remove('fa-eye-slash');
-      icon.classList.add('fa-eye');
+      icon.classList.replace('fa-eye-slash', 'fa-eye');
     }
     this.addRippleEffect(toggle);
   }
@@ -50,8 +76,8 @@ class LoginManager {
 
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
-    const remember = document.getElementById('remember').checked;
-    const submitBtn = document.querySelector('.login-btn');
+    const remember = document.getElementById('remember')?.checked;
+    const submitBtn = document.querySelector('#loginForm .login-btn');
 
     if (!this.validateUsername(username)) {
       this.showToast('Username must be 1–12 letters or numbers only', 'error');
@@ -68,13 +94,48 @@ class LoginManager {
       await this.simulateLogin(username, password, remember);
       this.showToast('Login successful! Redirecting...', 'success');
       setTimeout(() => {
-        // window.location.href = '/dashboard'; // Uncomment for real redirect
+        // window.location.href = '/dashboard';
       }, 1500);
     } catch (err) {
       this.showToast(err.message, 'error');
     } finally {
       this.setLoading(submitBtn, false);
     }
+  }
+
+  async handleSignup(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('newUsername').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const submitBtn = document.querySelector('#signupForm .login-btn');
+
+    if (!this.validateUsername(username)) {
+      this.showToast('Username must be 1–12 letters or numbers only', 'error');
+      return;
+    }
+    if (!this.validateEmail(email)) {
+      this.showToast('Invalid email format', 'error');
+      return;
+    }
+    if (password.length < 6) {
+      this.showToast('Password must be at least 6 characters', 'error');
+      return;
+    }
+    if (password !== confirmPassword) {
+      this.showToast('Passwords do not match', 'error');
+      return;
+    }
+
+    this.setLoading(submitBtn, true);
+
+    setTimeout(() => {
+      this.showToast('Signup successful! Redirecting...', 'success');
+      this.setLoading(submitBtn, false);
+      // window.location.href = '/welcome';
+    }, 2000);
   }
 
   async simulateLogin(username, password, remember) {
@@ -89,6 +150,11 @@ class LoginManager {
   validateUsername(username) {
     const re = /^[a-zA-Z0-9]{1,12}$/;
     return re.test(username);
+  }
+
+  validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
   }
 
   handleInputFocus(e) {
@@ -159,4 +225,12 @@ class LoginManager {
         shapes.forEach((shape, i) => {
           const speed = (i + 1) * 0.5;
           const xOffset = (x - 0.5) * speed * 20;
-          const yOffset = (y - 
+          const yOffset = (y - 0.5) * speed * 20;
+          shape.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        });
+      });
+    }
+  }
+}
+
+new LoginManager();
