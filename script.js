@@ -47,7 +47,6 @@ class LoginManager {
 
   async handleLogin(e) {
     e.preventDefault();
-
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const remember = document.getElementById('remember').checked;
@@ -159,4 +158,12 @@ class LoginManager {
         shapes.forEach((shape, i) => {
           const speed = (i + 1) * 0.5;
           const xOffset = (x - 0.5) * speed * 20;
-          const yOffset = (y -
+          const yOffset = (y - 0.5) * speed * 20;
+          shape.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        });
+      });
+    }
+  }
+}
+
+new LoginManager();
