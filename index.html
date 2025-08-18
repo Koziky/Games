@@ -1,87 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Koziky AI — Modern Chat</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Koziky AI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Animated background -->
+  <!-- Background -->
   <div class="bg">
     <div class="blob b1"></div>
     <div class="blob b2"></div>
     <div class="blob b3"></div>
-    <div class="grain"></div>
-    <div class="vignette"></div>
   </div>
 
   <div class="app">
-    <!-- Sidebar: conversations -->
-    <aside class="sidebar" aria-label="Conversation List">
-      <div class="brand">
-        <div class="logo">
-          <svg viewBox="0 0 48 48" aria-hidden="true">
-            <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" /><stop offset="1" /></linearGradient></defs>
-            <path d="M24 4l6.9 4 8.1 0 2 7 4 7-4 7-2 7-8.1 0L24 44l-6.9-4-8.1 0-2-7-4-7 4-7 2-7 8.1 0L24 4z" fill="url(#g)"/>
-          </svg>
-        </div>
-        <div class="title">Koziky AI</div>
-      </div>
-
-      <button id="newChatBtn" class="btn primary" title="Start a new chat">
-        <span class="icon">＋</span> New Chat
-      </button>
-
-      <div id="convList" class="conv-list" role="list"></div>
-
-      <div class="sidebar-footer">
-        <button id="exportBtn" class="btn ghost" title="Export current chat">Export</button>
-        <button id="clearAllBtn" class="btn danger ghost" title="Delete all chats">Clear All</button>
-      </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Koziky AI</h2>
+      <button id="newChat">＋ New Chat</button>
+      <div id="convList"></div>
     </aside>
 
-    <!-- Main chat -->
-    <main class="chat" aria-label="Chat Area">
-      <header class="chat-header">
-        <div class="chat-meta">
-          <h1 id="chatTitle">New Conversation</h1>
-          <div class="sub">Modern, slick AI UI • Image upload • Auto-saves</div>
-        </div>
-        <div class="chat-actions">
-          <button id="renameBtn" class="icon-btn" title="Rename chat" aria-label="Rename chat">
-            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41L18.37 3.29a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-          </button>
-          <button id="deleteBtn" class="icon-btn danger" title="Delete chat" aria-label="Delete chat">
-            <svg viewBox="0 0 24 24"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-          </button>
-        </div>
+    <!-- Chat -->
+    <main class="chat">
+      <header>
+        <h1 id="chatTitle">New Conversation</h1>
       </header>
 
-      <section id="messages" class="messages" aria-live="polite"></section>
+      <section id="messages" class="messages"></section>
 
-      <footer class="composer" aria-label="Message Composer">
-        <div id="imageChips" class="chips" hidden></div>
-
-        <div class="input-row">
-          <button id="attachBtn" class="icon-btn" title="Attach images" aria-label="Attach images">
-            <svg viewBox="0 0 24 24"><path d="M16.5 6.5l-7.78 7.78a3.5 3.5 0 1 0 4.95 4.95l7.43-7.43a5.5 5.5 0 1 0-7.78-7.78L5.9 6.36"/></svg>
-          </button>
-          <input id="fileInput" type="file" accept="image/*" multiple hidden />
-          <textarea id="input" rows="1" placeholder="Send a message to your AI… (paste images too)" autocomplete="off"></textarea>
-          <button id="sendBtn" class="btn primary" aria-label="Send">Send</button>
-        </div>
-
-        <div class="tips">
-          <span>Tip: drag & drop or paste images • Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a newline</span>
-        </div>
+      <footer class="composer">
+        <input id="fileInput" type="file" accept="image/*" hidden multiple>
+        <button id="attachBtn">📎</button>
+        <textarea id="input" placeholder="Send a message..."></textarea>
+        <button id="sendBtn">➤</button>
       </footer>
     </main>
   </div>
 
-  <!-- Fullscreen lightbox -->
+  <!-- Image Lightbox -->
   <dialog id="lightbox">
-    <img id="lightboxImg" alt="" />
+    <img id="lightboxImg" alt="">
   </dialog>
 
   <script src="script.js"></script>
