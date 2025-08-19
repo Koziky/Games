@@ -1,18 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Koziky AI</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KozyAi - Hacker Terminal</title>
+    <meta name="description" content="Advanced AI Assistant with Hacker Interface">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="chat-container">
-    <div id="chat-log"></div>
-    <div class="chat-input">
-      <input type="text" id="message" placeholder="Type a message...">
-      <button onclick="sendMessage()">Send</button>
+    <!-- Matrix Background Canvas -->
+    <canvas id="matrix-canvas" class="matrix-background"></canvas>
+    
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="hacker-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg class="terminal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="4,17 10,11 4,5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="app-title glitch" data-text="KozyAi">KozyAi</h1>
+                        <p class="app-subtitle">Neural Network Interface v2.1.337</p>
+                    </div>
+                </div>
+                
+                <div class="system-status">
+                    <div class="status-item">
+                        <svg class="cpu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                            <rect x="9" y="9" width="6" height="6"></rect>
+                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                            <line x1="20" y1="15" x2="23" y2="15"></line>
+                            <line x1="1" y1="15" x2="4" y2="15"></line>
+                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                        </svg>
+                        <span class="status-label">CPU:</span>
+                        <span class="status-value" id="cpu-usage">25%</span>
+                    </div>
+                    
+                    <div class="status-item">
+                        <div class="memory-bar">
+                            <div class="memory-fill" id="memory-fill"></div>
+                        </div>
+                        <span class="status-label">MEM:</span>
+                        <span class="status-value" id="mem-usage">67%</span>
+                    </div>
+                    
+                    <div class="status-item">
+                        <svg class="wifi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                            <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                            <path d="M12 20h.01"></path>
+                        </svg>
+                        <span class="status-value">NET: SECURE</span>
+                    </div>
+                    
+                    <div class="status-item">
+                        <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span class="status-value">ENCRYPTED</span>
+                    </div>
+                    
+                    <div class="status-item">
+                        <span class="status-value" id="current-time">--:--:--</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="chat-container">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <svg class="terminal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="4,17 10,11 4,5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                    </svg>
+                    <h2 class="chat-title glitch" data-text="KozyAi Terminal">KozyAi Terminal</h2>
+                    <div class="online-indicator">
+                        <div class="online-dot"></div>
+                        <span>ONLINE</span>
+                    </div>
+                </div>
+                
+                <!-- Messages Area -->
+                <div class="messages-area" id="messages-area">
+                    <div class="message ai-message">
+                        <div class="message-content terminal-prompt">KozyAi terminal initialized. Welcome, user. How may I assist you today?</div>
+                        <div class="message-meta">kozy@ai • <span class="timestamp"></span></div>
+                    </div>
+                </div>
+                
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                    <div class="typing-dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span>KozyAi is processing</span>
+                </div>
+                
+                <!-- Input Area -->
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <span class="terminal-prompt-symbol">$</span>
+                        <input type="text" id="message-input" placeholder="Enter command..." class="message-input">
+                        <button id="send-button" class="send-button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
-  <script src="script.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
