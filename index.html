@@ -1,49 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
   <title>Koziky AI</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Background -->
-  <div class="bg">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+  <div class="chat-container">
+    <div id="chat-log"></div>
+    <div class="chat-input">
+      <input type="text" id="message" placeholder="Type a message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
-
-  <div class="app">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2>Koziky AI</h2>
-      <button id="newChat">＋ New Chat</button>
-      <div id="convList"></div>
-    </aside>
-
-    <!-- Chat -->
-    <main class="chat">
-      <header>
-        <h1 id="chatTitle">New Conversation</h1>
-      </header>
-
-      <section id="messages" class="messages"></section>
-
-      <footer class="composer">
-        <input id="fileInput" type="file" accept="image/*" hidden multiple>
-        <button id="attachBtn">📎</button>
-        <textarea id="input" placeholder="Send a message..."></textarea>
-        <button id="sendBtn">➤</button>
-      </footer>
-    </main>
-  </div>
-
-  <!-- Image Lightbox -->
-  <dialog id="lightbox">
-    <img id="lightboxImg" alt="">
-  </dialog>
-
   <script src="script.js"></script>
 </body>
 </html>
