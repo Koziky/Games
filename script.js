@@ -1,5 +1,5 @@
-const API_KEY = "sk-your-api-key-here"; // ⚠️ Visible if you share your repo
-const API_URL = "https://api.openai.com/v1/chat/completions";
+const HF_KEY = "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"; 
+const HF_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2";
 
 const messagesEl = document.getElementById("messages");
 const form = document.getElementById("chat-form");
@@ -13,6 +13,24 @@ function addBubble(text, who) {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+async function query(text) {
+  const res = await fetch(HF_URL, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${HF_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ inputs: text })
+  });
+  const data = await res.json();
+
+  // Hugging Face often returns an array of generated_text objects
+  if (Array.isArray(data) && data[0]?.generated_text) {
+    return data[0].generated_text;
+  }
+  return JSON.stringify(data);
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const userText = input.value.trim();
@@ -22,19 +40,10 @@ form.addEventListener("submit", async (e) => {
   input.value = "";
   addBubble("…thinking", "ai");
 
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-5",
-      messages: [{ role: "user", content: userText }]
-    })
-  });
-
-  const data = await res.json();
-  messagesEl.lastChild.textContent = data.choices[0].message.content;
+  try {
+    const reply = await query(userText);
+    messagesEl.lastChild.textContent = reply;
+  } catch (err) {
+    messagesEl.lastChild.textContent = "Error: " + err.message;
+  }
 });
-
