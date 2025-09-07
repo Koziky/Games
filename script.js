@@ -1,44 +1,40 @@
-document.getElementById("generateBtn").addEventListener("click", async () => {
-  const prompt = document.getElementById("prompt").value;
-  const loading = document.getElementById("loading");
-  const result = document.getElementById("result");
-  const audioPlayer = document.getElementById("audioPlayer");
-  const downloadLink = document.getElementById("downloadLink");
+const API_KEY = "sk-your-api-key-here"; // ⚠️ Visible if you share your repo
+const API_URL = "https://api.openai.com/v1/chat/completions";
 
-  if (!prompt.trim()) {
-    alert("Please enter a song idea!");
-    return;
-  }
+const messagesEl = document.getElementById("messages");
+const form = document.getElementById("chat-form");
+const input = document.getElementById("input");
 
-  loading.classList.remove("hidden");
-  result.classList.add("hidden");
+function addBubble(text, who) {
+  const div = document.createElement("div");
+  div.className = `bubble ${who}`;
+  div.textContent = text;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
 
-  try {
-    // 🔥 Replace this with your actual API call
-    const response = await fakeApiCall(prompt);
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const userText = input.value.trim();
+  if (!userText) return;
 
-    // Load audio
-    audioPlayer.src = response.audioUrl;
-    downloadLink.href = response.audioUrl;
+  addBubble(userText, "user");
+  input.value = "";
+  addBubble("…thinking", "ai");
 
-    loading.classList.add("hidden");
-    result.classList.remove("hidden");
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong while generating music.");
-    loading.classList.add("hidden");
-  }
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "gpt-5",
+      messages: [{ role: "user", content: userText }]
+    })
+  });
+
+  const data = await res.json();
+  messagesEl.lastChild.textContent = data.choices[0].message.content;
 });
 
-// --- Placeholder API call function ---
-async function fakeApiCall(prompt) {
-  console.log("Sending to API:", prompt);
-
-  // Simulate API delay
-  await new Promise(res => setTimeout(res, 3000));
-
-  // Return a demo audio file
-  return {
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-  };
-}
