@@ -1,4 +1,4 @@
-const HF_KEY = "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"; 
+const HF_KEY = "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"; 
 const HF_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2";
 
 const messagesEl = document.getElementById("messages");
@@ -47,3 +47,4 @@ form.addEventListener("submit", async (e) => {
     messagesEl.lastChild.textContent = "Error: " + err.message;
   }
 });
+
