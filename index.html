@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Music Generator</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My GPT-5 Site</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>🎵 AI Music Generator</h1>
-    <textarea id="prompt" placeholder="Enter your song idea (e.g. 'Chill lo-fi beats with female vocals')"></textarea>
-    <button id="generateBtn">Generate Song</button>
-
-    <div id="loading" class="hidden">⏳ Generating your track...</div>
-
-    <div id="result" class="hidden">
-      <h2>Your Song</h2>
-      <audio id="audioPlayer" controls></audio>
-      <a id="downloadLink" href="#" download="ai-song.mp3">⬇️ Download</a>
-    </div>
+  <div class="chat">
+    <h1>🤖 My GPT-5 AI</h1>
+    <div id="messages"></div>
+    <form id="chat-form">
+      <input id="input" placeholder="Say something..." autocomplete="off" />
+      <button>Send</button>
+    </form>
   </div>
   <script src="script.js"></script>
 </body>
