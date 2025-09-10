@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BRAFLIX</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 Game Hub</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">BRAFLIX</div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <h1>🎮 Game Hub</h1>
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Shows</a>
-      <a href="#">Movies</a>
-      <a href="#">My List</a>
+      <ul class="nav-links">
+        <li><button data-category="all" class="active">Home</button></li>
+        <li><button data-category="shooting">Shooting</button></li>
+        <li><button data-category="running">Running</button></li>
+        <li><button data-category="tower-defense">Tower Defense</button></li>
+        <li><button data-category="puzzle">Puzzle</button></li>
+        <li><button data-category="cars">Cars</button></li>
+      </ul>
     </nav>
-    <div class="nav-right">
-      <input type="text" placeholder="Search..." class="search-bar" />
-      <span class="icon">🔔</span>
-      <span class="icon">👤</span>
-    </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1><span class="title-main">Cosmic</span> <span class="title-sub">ODYSSEY</span></h1>
-      <p>
-        When humanity's last hope lies in the depths of space, one astronaut
-        must venture beyond the known universe to save Earth from extinction.
-      </p>
-      <div class="hero-buttons">
-        <button class="btn btn-primary">▶ Play Now</button>
-        <button class="btn btn-secondary">+ My List</button>
-        <button class="btn btn-secondary">ℹ More Info</button>
-      </div>
-      <div class="hero-meta">
-        <span class="match">98% Match</span>
-        <span>2024</span>
-        <span>16+</span>
-        <span>2h 28m</span>
-        <span>4K HDR</span>
-      </div>
-      <div class="progress">
-        <div class="progress-bar"></div>
-      </div>
-      <span class="continue">Continue Watching</span>
-    </div>
-  </section>
+  <!-- Main Game Grid -->
+  <main class="game-grid">
 
-  <!-- Row Section -->
-  <section class="row">
-    <h2>Most Binge-Worthy <a href="#">View All →</a></h2>
-    <div class="carousel" id="movie-row">
-      <!-- movie cards go here -->
+    <!-- Cars Arena -->
+    <div class="game-card" data-category="cars">
+      <a href="games/cars-arena.html">
+        <img src="https://img.gamedistribution.com/9c6b997d8b3c4e849c4c0a7046ce4175-512x512.jpeg" alt="Cars Arena">
+        <h3>Cars Arena</h3>
+      </a>
     </div>
-  </section>
+
+    <!-- State Connect -->
+    <div class="game-card" data-category="puzzle">
+      <a href="games/state-connect.html">
+        <img src="https://img.gamedistribution.com/d3cf98962f8c4ed78e5b079f8c6a0e73-512x512.jpeg" alt="State Connect">
+        <h3>State Connect</h3>
+      </a>
+    </div>
+
+    <!-- Add more games below (just copy this block) -->
+    <!--
+    <div class="game-card" data-category="shooting">
+      <a href="games/game-name.html">
+        <img src="thumbnail-link.jpg" alt="Game Name">
+        <h3>Game Name</h3>
+      </a>
+    </div>
+    -->
+
+  </main>
 
   <script src="script.js"></script>
 </body>
