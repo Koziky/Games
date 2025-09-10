@@ -1,4 +1,4 @@
-// Game Data (using free thumbnail placeholders)
+// Game Data
 const games = [
   {
     title: "Cars Arena",
