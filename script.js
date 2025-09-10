@@ -1,22 +1,22 @@
-// Game Data
+// Game Data (using free thumbnail placeholders)
 const games = [
   {
     title: "Cars Arena",
     category: "cars",
-    thumbnail: "thumbnails/cars-arena.jpg",
-    url: "games/cars-arena/index.html"
+    thumbnail: "https://via.placeholder.com/400x200/111111/ffffff?text=Cars+Arena",
+    url: "https://ubg77.github.io/edit/cars-arena/"
   },
   {
     title: "Bubble Tower 3D",
     category: "tower",
-    thumbnail: "thumbnails/bubble-tower.jpg",
-    url: "games/bubble-tower/index.html"
+    thumbnail: "https://via.placeholder.com/400x200/222222/ffffff?text=Bubble+Tower+3D",
+    url: "https://ubg77.github.io/edit/bubble-tower-3d/"
   },
   {
     title: "Run Sausage Run",
     category: "running",
-    thumbnail: "thumbnails/sausage-run.jpg",
-    url: "games/sausage-run/index.html"
+    thumbnail: "https://via.placeholder.com/400x200/333333/ffffff?text=Run+Sausage+Run",
+    url: "https://ubg77.github.io/edit/run-sausage-run/"
   }
 ];
 
