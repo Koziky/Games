@@ -1,4 +1,4 @@
-/* General Reset */
+/* Reset + Base */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -16,9 +16,9 @@ header {
 }
 
 header .logo {
-  color: red;
   font-size: 24px;
   font-weight: bold;
+  color: red;
 }
 
 header nav {
@@ -40,18 +40,6 @@ header nav button:hover {
   color: red;
 }
 
-#searchBar {
-  padding: 6px 10px;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  transition: 0.3s;
-}
-
-#searchBar:focus {
-  box-shadow: 0 0 10px red;
-}
-
 /* Game Grid */
 #gameGrid {
   display: grid;
@@ -66,6 +54,7 @@ header nav button:hover {
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s;
+  text-align: center;
 }
 
 .game-card:hover {
@@ -74,14 +63,14 @@ header nav button:hover {
 
 .game-card img {
   width: 100%;
-  display: block;
+  height: 140px;
+  object-fit: cover;
 }
 
 .game-card h3 {
   padding: 10px;
   margin: 0;
   font-size: 16px;
-  font-weight: bold;
 }
 
 /* Modal */
@@ -110,6 +99,7 @@ header nav button:hover {
   top: 20px;
   right: 40px;
   font-size: 30px;
+  font-weight: bold;
   color: #fff;
   cursor: pointer;
 }
