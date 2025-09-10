@@ -3,48 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎮 Game Hub</title>
+  <title>BRAFLIX Games</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="site-header">
-    <h1>🎮 Game Hub</h1>
-    <nav>
-      <ul class="nav-links">
-        <li><button data-category="all" class="active">Home</button></li>
-        <li><button data-category="shooting">Shooting</button></li>
-        <li><button data-category="running">Running</button></li>
-        <li><button data-category="tower-defense">Tower Defense</button></li>
-        <li><button data-category="puzzle">Puzzle</button></li>
-        <li><button data-category="cars">Cars</button></li>
-      </ul>
+  <!-- Navbar -->
+  <header class="navbar">
+    <h1 class="logo">BRAFLIX</h1>
+    <nav class="nav-links">
+      <a href="#" data-filter="all">Home</a>
+      <a href="#" data-filter="shooting">Shooting</a>
+      <a href="#" data-filter="running">Running</a>
+      <a href="#" data-filter="tower">Tower Defense</a>
+      <a href="#" data-filter="cars">Cars</a>
     </nav>
   </header>
 
-  <!-- Main Game Grid -->
+  <!-- Main Grid -->
   <main class="game-grid">
-
-    <!-- Cars Arena -->
+    <!-- Example Games -->
     <div class="game-card" data-category="cars" data-src="https://play.famobi.com/cars-arena/A1000-10">
       <img src="https://img.gamedistribution.com/9c6b997d8b3c4e849c4c0a7046ce4175-512x512.jpeg" alt="Cars Arena">
       <h3>Cars Arena</h3>
     </div>
 
-    <!-- State Connect -->
-    <div class="game-card" data-category="puzzle" data-src="https://play.famobi.com/state-connect/A1000-10">
-      <img src="https://img.gamedistribution.com/d3cf98962f8c4ed78e5b079f8c6a0e73-512x512.jpeg" alt="State Connect">
-      <h3>State Connect</h3>
+    <div class="game-card" data-category="shooting" data-src="https://play.famobi.com/bubble-tower-3d/A1000-10">
+      <img src="https://img.gamedistribution.com/8f1c6efb9a944b2db7f0972b2119ffef-512x512.jpeg" alt="Bubble Tower 3D">
+      <h3>Bubble Tower 3D</h3>
     </div>
 
+    <div class="game-card" data-category="running" data-src="https://play.famobi.com/run-sausage-run/A1000-10">
+      <img src="https://img.gamedistribution.com/1b22965a2d6a4d28a93f74deee618d6c-512x512.jpeg" alt="Run Sausage Run">
+      <h3>Run Sausage Run</h3>
+    </div>
   </main>
 
-  <!-- Modal Overlay -->
+  <!-- Modal -->
   <div id="gameModal" class="modal hidden">
     <div class="modal-content">
-      <button id="closeModal" class="close-btn">✖</button>
-      <iframe id="modalGameFrame" src="" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+      <span id="closeModal" class="close">&times;</span>
+      <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 
