@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- Header -->
   <header>
     <h1 class="logo">Kozy Games</h1>
     <nav>
@@ -15,29 +15,15 @@
       <button data-category="shooting">Shooting</button>
       <button data-category="running">Running</button>
       <button data-category="tower">Tower Defense</button>
-      <button data-category="cars">Cars</button>
     </nav>
-    <input type="text" id="searchBar" placeholder="Search games...">
   </header>
 
-  <!-- GAME GRID -->
+  <!-- Game Grid -->
   <main id="gameGrid">
     <!-- Cars Arena -->
-    <div class="game-card" data-category="cars" data-src="https://html5.gamedistribution.com/0cf1c20b9c734d17b52db6e69aa1233b/">
+    <div class="game-card" data-category="running" data-src="https://html5.gamedistribution.com/0cf1c20b9c734d17b52db6e69aa1233b/">
       <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
       <h3>Cars Arena</h3>
-    </div>
-
-    <!-- Bubble Tower 3D -->
-    <div class="game-card" data-category="tower" data-src="https://html5.gamedistribution.com/7d3a3c2267654e6f912a6a2e0e9b9f95/">
-      <img src="https://img.famobi.com/bubble-tower-3d/cover" alt="Bubble Tower 3D">
-      <h3>Bubble Tower 3D</h3>
-    </div>
-
-    <!-- Run Sausage Run -->
-    <div class="game-card" data-category="running" data-src="https://html5.gamedistribution.com/cf8b7f44bc454f88a0cfb3f99d3aa46b/">
-      <img src="https://img.famobi.com/run-sausage-run/cover" alt="Run Sausage Run">
-      <h3>Run Sausage Run</h3>
     </div>
 
     <!-- Tunnel Rush -->
@@ -47,7 +33,7 @@
     </div>
   </main>
 
-  <!-- MODAL -->
+  <!-- Modal -->
   <div id="gameModal" class="modal">
     <span class="close">&times;</span>
     <iframe id="gameFrame" frameborder="0" allowfullscreen></iframe>
