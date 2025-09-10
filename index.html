@@ -1,20 +1,39 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kozy AI Chatbot</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Braflix UI Demo</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat">
-    <h1>🤖 Kozy AI</h1>
-    <div id="messages" class="messages"></div>
-    <form id="chat-form">
-      <input id="input" placeholder="Type a message..." autocomplete="off" />
-      <button type="submit">Send</button>
-    </form>
+  <!-- Navbar -->
+  <nav class="nav-glass p-4 flex justify-between items-center">
+    <h1 class="braflix-logo">Braflix</h1>
+    <div class="flex gap-4">
+      <button class="btn-play">Play</button>
+      <button class="btn-secondary">Secondary</button>
+      <button class="btn-ghost">Ghost</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-banner h-[60vh] flex items-center justify-center">
+    <div class="hero-content text-center">
+      <h2 class="text-4xl font-bold mb-4">Welcome to Braflix</h2>
+      <p class="mb-6">A modern streaming platform design system demo.</p>
+      <button class="btn-play">Start Watching</button>
+    </div>
+  </section>
+
+  <!-- Example Progress -->
+  <div class="m-8">
+    <h3 class="mb-2">Progress</h3>
+    <div class="braflix-progress">
+      <div class="braflix-progress-indicator" style="width: 40%;"></div>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
