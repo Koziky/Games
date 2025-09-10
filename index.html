@@ -1,48 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Hub</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Game Hub</h1>
-    <nav>
-      <button data-category="all">All</button>
-      <button data-category="shooting">Shooting</button>
-      <button data-category="running">Running</button>
-      <button data-category="tower">Tower Defense</button>
-    </nav>
-  </header>
-
-  <main id="gameGrid">
-    <!-- Example Cards -->
-    <div class="game-card" data-category="running" data-src="cars-arena">
-      <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
-      <h3>Cars Arena</h3>
-    </div>
-
-    <div class="game-card" data-category="running" data-src="tunnel-rush">
-      <img src="https://img.famobi.com/tunnel-rush/cover" alt="Tunnel Rush">
-      <h3>Tunnel Rush</h3>
-    </div>
-
-    <div class="game-card" data-category="tower" data-src="tower-defense">
-      <img src="https://img.famobi.com/tower-defense/cover" alt="Tower Defense">
-      <h3>Tower Defense</h3>
-    </div>
-  </main>
-
-  <!-- Game Modal -->
-  <div id="gameModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <iframe id="gameFrame" src="" frameborder="0" allow="autoplay" scrolling="no"></iframe>
-    </div>
+<!-- Modal -->
+<div id="gameModal" class="modal hidden">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <iframe 
+      id="gameFrame" 
+      src="" 
+      frameborder="0" 
+      allow="autoplay; fullscreen; gamepad; keyboard; mouse; pointer-lock" 
+      allowfullscreen>
+    </iframe>
   </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+</div>
