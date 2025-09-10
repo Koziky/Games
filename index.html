@@ -1,90 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Braflix — Hero Fix</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BRAFLIX</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="nav-glass" role="banner">
-    <div class="nav-container">
-      <div class="nav-left">
-        <div class="logo">BRAFLIX</div>
-        <nav class="nav-links" aria-label="Main">
-          <a href="#">Home</a>
-          <a href="#">Shows</a>
-          <a href="#">Movies</a>
-          <a href="#">My List</a>
-        </nav>
-      </div>
-
-      <div class="nav-right">
-        <input class="search-input" placeholder="Search..." aria-label="Search" />
-        <button class="icon-btn" title="Notifications">🔔</button>
-        <button id="profileBtn" class="icon-btn" title="Profile">👤 ▾</button>
-
-        <div id="profileMenu" class="profile-menu hidden" role="menu" aria-hidden="true">
-          <a href="#">Account</a>
-          <a href="#">Settings</a>
-          <hr />
-          <a href="#">Logout</a>
-        </div>
-      </div>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">BRAFLIX</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Shows</a>
+      <a href="#">Movies</a>
+      <a href="#">My List</a>
+    </nav>
+    <div class="nav-right">
+      <input type="text" placeholder="Search..." class="search-bar" />
+      <span class="icon">🔔</span>
+      <span class="icon">👤</span>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main>
-    <section class="hero" aria-label="Featured">
-      <!-- background image is handled in CSS; put your image file next to index.html -->
-      <div class="hero-overlay" aria-hidden="true"></div>
-
-      <div class="hero-content">
-        <h1 class="hero-title">Cosmic<br /><span class="hero-accent">ODYSSEY</span></h1>
-
-        <p class="hero-desc">
-          When humanity's last hope lies in the depths of space, one astronaut must venture
-          beyond the known universe to save Earth from extinction.
-        </p>
-
-        <div class="hero-actions">
-          <button class="btn btn-play">▶ Play Now</button>
-          <button class="btn btn-secondary">＋ My List</button>
-          <button class="btn btn-ghost">ℹ More Info</button>
-        </div>
-
-        <div class="hero-meta">
-          <span class="match">● <strong>98% Match</strong></span>
-          <span>2024</span>
-          <span class="age">16+</span>
-          <span>2h 28m</span>
-          <span class="badge">4K HDR</span>
-        </div>
-
-        <div class="continue">
-          <div class="braflix-progress" aria-hidden="true">
-            <div class="braflix-progress-indicator" style="width: 40%"></div>
-          </div>
-          <div class="continue-label">Continue Watching</div>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1><span class="title-main">Cosmic</span> <span class="title-sub">ODYSSEY</span></h1>
+      <p>
+        When humanity's last hope lies in the depths of space, one astronaut
+        must venture beyond the known universe to save Earth from extinction.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary">▶ Play Now</button>
+        <button class="btn btn-secondary">+ My List</button>
+        <button class="btn btn-secondary">ℹ More Info</button>
       </div>
-    </section>
+      <div class="hero-meta">
+        <span class="match">98% Match</span>
+        <span>2024</span>
+        <span>16+</span>
+        <span>2h 28m</span>
+        <span>4K HDR</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+      <span class="continue">Continue Watching</span>
+    </div>
+  </section>
 
-    <!-- example section under hero -->
-    <section class="section">
-      <div class="section-header">
-        <h2>Most Binge-Worthy</h2>
-        <a class="view-all" href="#">View All →</a>
-      </div>
-      <div class="carousel">
-        <div class="movie-card"></div>
-        <div class="movie-card"></div>
-        <div class="movie-card"></div>
-        <div class="movie-card"></div>
-      </div>
-    </section>
-  </main>
+  <!-- Row Section -->
+  <section class="row">
+    <h2>Most Binge-Worthy <a href="#">View All →</a></h2>
+    <div class="carousel" id="movie-row">
+      <!-- movie cards go here -->
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
