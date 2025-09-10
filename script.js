@@ -1,55 +1,11 @@
-// Game Data
-const games = [
-  {
-    title: "Cars Arena",
-    category: "cars",
-    thumbnail: "https://via.placeholder.com/400x200/111111/ffffff?text=Cars+Arena",
-    url: "https://ubg77.github.io/edit/cars-arena/"
-  },
-  {
-    title: "Bubble Tower 3D",
-    category: "tower",
-    thumbnail: "https://via.placeholder.com/400x200/222222/ffffff?text=Bubble+Tower+3D",
-    url: "https://ubg77.github.io/edit/bubble-tower-3d/"
-  },
-  {
-    title: "Run Sausage Run",
-    category: "running",
-    thumbnail: "https://via.placeholder.com/400x200/333333/ffffff?text=Run+Sausage+Run",
-    url: "https://ubg77.github.io/edit/run-sausage-run/"
-  }
-];
-
-// Render Games
-function renderGames(filter = "all", search = "") {
-  const grid = document.getElementById("gameGrid");
-  grid.innerHTML = "";
-
-  const filtered = games.filter(game =>
-    (filter === "all" || game.category === filter) &&
-    game.title.toLowerCase().includes(search.toLowerCase())
-  );
-
-  filtered.forEach(game => {
-    const card = document.createElement("div");
-    card.className = "game-card";
-    card.innerHTML = `
-      <img src="${game.thumbnail}" alt="${game.title}">
-      <h3>${game.title}</h3>
-    `;
-    card.onclick = () => openGame(game);
-    grid.appendChild(card);
-  });
-}
-
 // Open Game in Modal
-function openGame(game) {
+function openGame(title, url) {
   const modal = document.getElementById("gameModal");
   const frame = document.getElementById("gameFrame");
-  const title = document.getElementById("gameTitle");
+  const titleEl = document.getElementById("gameTitle");
 
-  frame.src = game.url;
-  title.textContent = game.title;
+  frame.src = url;
+  titleEl.textContent = title;
 
   modal.classList.remove("hidden");
 }
@@ -63,18 +19,33 @@ function closeGame() {
   frame.src = "";
 }
 
-// Event Listeners
+// Attach click to all game cards
+document.querySelectorAll(".game-card").forEach(card => {
+  card.addEventListener("click", () => {
+    openGame(card.querySelector("h3").textContent, card.getAttribute("data-url"));
+  });
+});
+
+// Category filter
 document.querySelectorAll(".nav-links a").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
     const category = link.getAttribute("data-category");
-    renderGames(category, document.getElementById("searchInput").value);
+    document.querySelectorAll(".game-card").forEach(card => {
+      if (category === "all" || card.getAttribute("data-category") === category) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
   });
 });
 
+// Search filter
 document.getElementById("searchInput").addEventListener("input", e => {
-  renderGames("all", e.target.value);
+  const search = e.target.value.toLowerCase();
+  document.querySelectorAll(".game-card").forEach(card => {
+    const title = card.querySelector("h3").textContent.toLowerCase();
+    card.style.display = title.includes(search) ? "block" : "none";
+  });
 });
-
-// Initial Render
-renderGames();
