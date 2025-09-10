@@ -27,32 +27,26 @@
   <main class="game-grid">
 
     <!-- Cars Arena -->
-    <div class="game-card" data-category="cars">
-      <a href="games/cars-arena.html">
-        <img src="https://img.gamedistribution.com/9c6b997d8b3c4e849c4c0a7046ce4175-512x512.jpeg" alt="Cars Arena">
-        <h3>Cars Arena</h3>
-      </a>
+    <div class="game-card" data-category="cars" data-src="https://play.famobi.com/cars-arena/A1000-10">
+      <img src="https://img.gamedistribution.com/9c6b997d8b3c4e849c4c0a7046ce4175-512x512.jpeg" alt="Cars Arena">
+      <h3>Cars Arena</h3>
     </div>
 
     <!-- State Connect -->
-    <div class="game-card" data-category="puzzle">
-      <a href="games/state-connect.html">
-        <img src="https://img.gamedistribution.com/d3cf98962f8c4ed78e5b079f8c6a0e73-512x512.jpeg" alt="State Connect">
-        <h3>State Connect</h3>
-      </a>
+    <div class="game-card" data-category="puzzle" data-src="https://play.famobi.com/state-connect/A1000-10">
+      <img src="https://img.gamedistribution.com/d3cf98962f8c4ed78e5b079f8c6a0e73-512x512.jpeg" alt="State Connect">
+      <h3>State Connect</h3>
     </div>
-
-    <!-- Add more games below (just copy this block) -->
-    <!--
-    <div class="game-card" data-category="shooting">
-      <a href="games/game-name.html">
-        <img src="thumbnail-link.jpg" alt="Game Name">
-        <h3>Game Name</h3>
-      </a>
-    </div>
-    -->
 
   </main>
+
+  <!-- Modal Overlay -->
+  <div id="gameModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeModal" class="close-btn">✖</button>
+      <iframe id="modalGameFrame" src="" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
