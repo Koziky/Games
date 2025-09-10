@@ -5,20 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kozy Games</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
   <header class="navbar">
-    <input type="text" id="searchInput" placeholder="Search games..." />
-    <h1 class="logo">Kozy Games</h1>
+    <div class="logo">Kozy<span>Games</span></div>
     <nav class="nav-links">
       <a href="#" data-category="all">Home</a>
-      <a href="#" data-category="shooting">Shooting</a>
-      <a href="#" data-category="running">Running</a>
-      <a href="#" data-category="tower">Tower Defense</a>
-      <a href="#" data-category="cars">Cars</a>
+      <a href="#" data-category="games">Games</a>
+      <a href="#" data-category="popular">New & Popular</a>
+      <a href="#" data-category="list">My List</a>
+      <a href="#" data-category="genre">Browse by Genre</a>
     </nav>
+    <div class="nav-icons">
+      <i class="fas fa-search"></i>
+      <i class="fas fa-bell"></i>
+      <i class="fas fa-user"></i>
+    </div>
   </header>
+
+  <!-- Search (separate bar) -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search games...">
+  </div>
 
   <!-- Game Grid -->
   <main id="gameGrid" class="game-grid"></main>
