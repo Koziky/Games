@@ -3,36 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Braflix UI Demo</title>
+  <title>Braflix</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="nav-glass p-4 flex justify-between items-center">
-    <h1 class="braflix-logo">Braflix</h1>
-    <div class="flex gap-4">
-      <button class="btn-play">Play</button>
-      <button class="btn-secondary">Secondary</button>
-      <button class="btn-ghost">Ghost</button>
+  <header class="nav-glass">
+    <div class="nav-container">
+      <h1 class="braflix-logo">BRAFLIX</h1>
+      <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Shows</a>
+        <a href="#">Movies</a>
+        <a href="#">My List</a>
+      </nav>
+      <div class="nav-actions">
+        <input type="text" placeholder="Search..." class="search-input" />
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn profile-btn">👤</button>
+      </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- Hero -->
-  <section class="hero-banner h-[60vh] flex items-center justify-center">
-    <div class="hero-content text-center">
-      <h2 class="text-4xl font-bold mb-4">Welcome to Braflix</h2>
-      <p class="mb-6">A modern streaming platform design system demo.</p>
-      <button class="btn-play">Start Watching</button>
+  <!-- Hero Section -->
+  <section class="hero" style="background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1500&q=80');">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h2 class="hero-title">Cosmic <span>ODYSSEY</span></h2>
+      <p class="hero-desc">
+        When humanity's last hope lies in the depths of space,  
+        one astronaut must venture beyond the known universe  
+        to save Earth from extinction.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-play">▶ Play Now</button>
+        <button class="btn-secondary">+ My List</button>
+        <button class="btn-ghost">ℹ More Info</button>
+      </div>
+      <div class="hero-meta">
+        <span class="match">98% Match</span>
+        <span>2024</span>
+        <span>16+</span>
+        <span>2h 28m</span>
+        <span>4K HDR</span>
+      </div>
+      <div class="continue">
+        <div class="braflix-progress">
+          <div class="braflix-progress-indicator" style="width: 40%;"></div>
+        </div>
+        <span class="continue-label">Continue Watching</span>
+      </div>
     </div>
   </section>
 
-  <!-- Example Progress -->
-  <div class="m-8">
-    <h3 class="mb-2">Progress</h3>
-    <div class="braflix-progress">
-      <div class="braflix-progress-indicator" style="width: 40%;"></div>
+  <!-- Section Example -->
+  <section class="section">
+    <div class="section-header">
+      <h3>Most Binge-Worthy</h3>
+      <a href="#">View All →</a>
     </div>
-  </div>
+    <div class="carousel">
+      <div class="movie-card"></div>
+      <div class="movie-card"></div>
+      <div class="movie-card"></div>
+      <div class="movie-card"></div>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
