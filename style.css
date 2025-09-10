@@ -1,3 +1,4 @@
+/* General Reset */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -5,42 +6,66 @@ body {
   color: #fff;
 }
 
+/* Header */
 header {
-  background: #222;
-  padding: 1rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  background: #000;
+  padding: 10px 20px;
 }
 
-nav button {
-  margin: 0 5px;
-  padding: 0.5rem 1rem;
-  background: #444;
+header .logo {
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+header nav {
+  display: flex;
+  gap: 10px;
+}
+
+header nav button {
+  background: transparent;
   border: none;
-  border-radius: 5px;
   color: #fff;
   cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  transition: 0.3s;
 }
 
-nav button:hover {
-  background: #666;
+header nav button:hover {
+  color: red;
 }
 
+#searchBar {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  transition: 0.3s;
+}
+
+#searchBar:focus {
+  box-shadow: 0 0 10px red;
+}
+
+/* Game Grid */
 #gameGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 20px;
 }
 
 .game-card {
   background: #222;
-  padding: 1rem;
-  border-radius: 10px;
-  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 .game-card:hover {
@@ -48,45 +73,43 @@ nav button:hover {
 }
 
 .game-card img {
-  max-width: 100%;
-  border-radius: 8px;
+  width: 100%;
+  display: block;
+}
+
+.game-card h3 {
+  padding: 10px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /* Modal */
 .modal {
   display: none;
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
   align-items: center;
+  justify-content: center;
   z-index: 1000;
 }
 
-.modal-content {
-  position: relative;
-  width: 90%;
-  height: 90%;
-  background: #000;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-#gameFrame {
-  flex: 1;
-  width: 100%;
-  height: 100%;
+.modal iframe {
+  width: 80%;
+  height: 80%;
   border: none;
+  border-radius: 8px;
 }
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 2rem;
+  top: 20px;
+  right: 40px;
+  font-size: 30px;
   color: #fff;
   cursor: pointer;
-  z-index: 1001;
 }
