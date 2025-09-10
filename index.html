@@ -3,52 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kozy Games</title>
+  <title>Game Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
   <header>
-    <div class="nav-left">
-      <input type="text" id="searchBar" placeholder="Search games...">
-    </div>
-    
-    <h1 class="logo">Kozy <span>Games</span></h1>
-    
-    <nav class="nav-center">
-      <a href="#" data-category="all">Home</a>
-      <a href="#" data-category="shooting">Shooting</a>
-      <a href="#" data-category="running">Running</a>
-      <a href="#" data-category="tower">Tower Defense</a>
-      <a href="#" data-category="cars">Cars</a>
+    <h1>Game Hub</h1>
+    <nav>
+      <button data-category="all">All</button>
+      <button data-category="shooting">Shooting</button>
+      <button data-category="running">Running</button>
+      <button data-category="tower">Tower Defense</button>
     </nav>
   </header>
 
-  <!-- Game Grid -->
-  <main>
-    <div class="game-grid">
-      <div class="game-card" data-category="cars" data-src="games/cars-arena.html">
-        <img src="thumbnails/cars-arena.png" alt="Cars Arena">
-        <h3>Cars Arena</h3>
-      </div>
+  <main id="gameGrid">
+    <!-- Example Cards -->
+    <div class="game-card" data-category="running" data-src="cars-arena">
+      <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
+      <h3>Cars Arena</h3>
+    </div>
 
-      <div class="game-card" data-category="tower" data-src="games/bubble-tower.html">
-        <img src="thumbnails/bubble-tower.png" alt="Bubble Tower 3D">
-        <h3>Bubble Tower 3D</h3>
-      </div>
+    <div class="game-card" data-category="running" data-src="tunnel-rush">
+      <img src="https://img.famobi.com/tunnel-rush/cover" alt="Tunnel Rush">
+      <h3>Tunnel Rush</h3>
+    </div>
 
-      <div class="game-card" data-category="running" data-src="games/run-sausage.html">
-        <img src="thumbnails/run-sausage.png" alt="Run Sausage Run">
-        <h3>Run Sausage Run</h3>
-      </div>
+    <div class="game-card" data-category="tower" data-src="tower-defense">
+      <img src="https://img.famobi.com/tower-defense/cover" alt="Tower Defense">
+      <h3>Tower Defense</h3>
     </div>
   </main>
 
-  <!-- Modal -->
-  <div id="gameModal" class="modal hidden">
+  <!-- Game Modal -->
+  <div id="gameModal" class="modal">
     <div class="modal-content">
-      <span id="closeModal">&times;</span>
-      <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
+      <span class="close">&times;</span>
+      <iframe id="gameFrame" src="" frameborder="0" allow="autoplay" scrolling="no"></iframe>
     </div>
   </div>
 
