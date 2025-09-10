@@ -1,53 +1,46 @@
-// Open game in modal
-function openGame(title, url) {
+document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("gameModal");
-  const frame = document.getElementById("gameFrame");
-  const titleEl = document.getElementById("gameTitle");
+  const gameFrame = document.getElementById("gameFrame");
+  const closeBtn = document.querySelector(".close");
 
-  frame.src = url; // load game into iframe
-  titleEl.textContent = title;
-
-  modal.classList.remove("hidden");
-}
-
-// Close modal
-function closeGame() {
-  const modal = document.getElementById("gameModal");
-  const frame = document.getElementById("gameFrame");
-
-  modal.classList.add("hidden");
-  frame.src = ""; // reset to stop game audio
-}
-
-// Attach click event to all game cards
-document.querySelectorAll(".game-card").forEach(card => {
-  card.addEventListener("click", () => {
-    openGame(card.querySelector("h3").textContent, card.getAttribute("data-url"));
-  });
-});
-
-// Category filter
-document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click", e => {
-    e.preventDefault();
-    const category = link.getAttribute("data-category");
-
-    document.querySelectorAll(".game-card").forEach(card => {
-      if (category === "all" || card.getAttribute("data-category") === category) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
+  // Open modal on card click
+  document.querySelectorAll(".game-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const gameId = card.getAttribute("data-src");
+      let affiliateId = "A1000-10";
+      if (affiliateId === "A1000-10") {
+        affiliateId += (Math.random() >= 0.5) ? "A" : "B";
       }
+      gameFrame.src = `https://play.famobi.com/${gameId}/${affiliateId}`;
+      modal.style.display = "flex";
     });
   });
-});
 
-// Search filter
-document.getElementById("searchInput").addEventListener("input", e => {
-  const search = e.target.value.toLowerCase();
+  // Close modal
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    gameFrame.src = ""; // stop game when closing
+  });
 
-  document.querySelectorAll(".game-card").forEach(card => {
-    const title = card.querySelector("h3").textContent.toLowerCase();
-    card.style.display = title.includes(search) ? "block" : "none";
+  // Close on outside click
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+      gameFrame.src = "";
+    }
+  });
+
+  // Category filtering
+  document.querySelectorAll("nav button").forEach(button => {
+    button.addEventListener("click", () => {
+      const category = button.getAttribute("data-category");
+      document.querySelectorAll(".game-card").forEach(card => {
+        if (category === "all" || card.getAttribute("data-category") === category) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
   });
 });
