@@ -1,51 +1,80 @@
-// Selectors
-const cards = document.querySelectorAll(".game-card");
-const modal = document.getElementById("gameModal");
-const modalFrame = document.getElementById("gameFrame");
-const closeModal = document.getElementById("closeModal");
-const filters = document.querySelectorAll(".nav-center a");
-const searchBar = document.getElementById("searchBar");
+// Game Data
+const games = [
+  {
+    title: "Cars Arena",
+    category: "cars",
+    thumbnail: "thumbnails/cars-arena.jpg",
+    url: "games/cars-arena/index.html"
+  },
+  {
+    title: "Bubble Tower 3D",
+    category: "tower",
+    thumbnail: "thumbnails/bubble-tower.jpg",
+    url: "games/bubble-tower/index.html"
+  },
+  {
+    title: "Run Sausage Run",
+    category: "running",
+    thumbnail: "thumbnails/sausage-run.jpg",
+    url: "games/sausage-run/index.html"
+  }
+];
 
-// Category filtering
-filters.forEach(filter => {
-  filter.addEventListener("click", (e) => {
-    e.preventDefault();
-    const category = filter.getAttribute("data-category");
+// Render Games
+function renderGames(filter = "all", search = "") {
+  const grid = document.getElementById("gameGrid");
+  grid.innerHTML = "";
 
-    cards.forEach(card => {
-      if (category === "all" || card.getAttribute("data-category") === category) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
+  const filtered = games.filter(game =>
+    (filter === "all" || game.category === filter) &&
+    game.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  filtered.forEach(game => {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.innerHTML = `
+      <img src="${game.thumbnail}" alt="${game.title}">
+      <h3>${game.title}</h3>
+    `;
+    card.onclick = () => openGame(game);
+    grid.appendChild(card);
   });
-});
+}
 
-// Search filtering
-searchBar.addEventListener("keyup", () => {
-  const searchTerm = searchBar.value.toLowerCase();
-  cards.forEach(card => {
-    const title = card.querySelector("h3").textContent.toLowerCase();
-    if (title.includes(searchTerm)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
-  });
-});
+// Open Game in Modal
+function openGame(game) {
+  const modal = document.getElementById("gameModal");
+  const frame = document.getElementById("gameFrame");
+  const title = document.getElementById("gameTitle");
 
-// Modal open
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-    const src = card.getAttribute("data-src");
-    modalFrame.src = src;
-    modal.classList.remove("hidden");
-  });
-});
+  frame.src = game.url;
+  title.textContent = game.title;
 
-// Modal close
-closeModal.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+}
+
+// Close Game
+function closeGame() {
+  const modal = document.getElementById("gameModal");
+  const frame = document.getElementById("gameFrame");
+
   modal.classList.add("hidden");
-  modalFrame.src = "";
+  frame.src = "";
+}
+
+// Event Listeners
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const category = link.getAttribute("data-category");
+    renderGames(category, document.getElementById("searchInput").value);
+  });
 });
+
+document.getElementById("searchInput").addEventListener("input", e => {
+  renderGames("all", e.target.value);
+});
+
+// Initial Render
+renderGames();
