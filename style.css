@@ -1,169 +1,86 @@
-:root {
-  --background: hsl(0 0% 6%);
-  --foreground: hsl(0 0% 96%);
-  --primary: hsl(0 86% 58%);
-  --primary-hover: hsl(0 86% 52%);
-  --secondary: hsl(0 0% 18%);
-  --secondary-hover: hsl(0 0% 22%);
-  --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
-  --shadow-glow: 0 0 30px hsl(0 86% 58% / 0.2);
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--background);
-  color: var(--foreground);
-}
-
-/* Navbar */
-.nav-glass {
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(12px);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-}
+/* Navbar (improve spacing) */
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 3rem;
-}
-.braflix-logo {
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: hsl(0 86% 58%);
-}
-.nav-links a {
-  margin: 0 1rem;
-  text-decoration: none;
-  color: var(--foreground);
-  font-weight: 500;
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.search-input {
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  border: none;
-  background: #111;
-  color: white;
+  padding: 0.8rem 4rem;
 }
 
-/* Hero */
+/* Hero Section */
 .hero {
   position: relative;
-  height: 90vh;
+  height: 100vh; /* full screen height */
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: flex-end;
+  color: white;
 }
+
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
 }
+
 .hero-content {
   position: relative;
-  z-index: 10;
-  padding: 4rem;
-  max-width: 600px;
+  z-index: 2;
+  padding: 0 4rem 6rem;
+  max-width: 700px;
 }
+
 .hero-title {
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
 }
+
 .hero-title span {
   color: var(--primary);
 }
+
 .hero-desc {
-  margin: 1rem 0 2rem;
-  line-height: 1.5;
-  color: #ddd;
-}
-.hero-buttons button {
-  margin-right: 1rem;
-}
-.hero-meta {
-  margin: 1rem 0;
-  font-size: 0.9rem;
-  display: flex;
-  gap: 1rem;
-  color: #aaa;
-}
-.match {
-  color: #21d07a;
-  font-weight: bold;
-}
-.continue {
-  margin-top: 1rem;
-}
-.braflix-progress {
-  height: 4px;
-  background: #333;
-  border-radius: 2px;
-  overflow: hidden;
-}
-.braflix-progress-indicator {
-  height: 100%;
-  background: var(--primary);
+  margin: 1.5rem 0 2rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
 }
 
 /* Buttons */
-.btn-play {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-.btn-play:hover { background: var(--primary-hover); }
-.btn-secondary {
-  background: rgba(255,255,255,0.1);
-  color: white;
-  border: 1px solid #444;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.btn-secondary:hover { background: var(--secondary-hover); }
-.btn-ghost {
-  background: none;
-  color: #aaa;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  cursor: pointer;
-}
-.btn-ghost:hover { color: white; }
-
-/* Sections */
-.section {
-  padding: 2rem 3rem;
-}
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.section-header h3 {
-  font-size: 1.5rem;
-}
-.carousel {
+.hero-buttons {
   display: flex;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
-.movie-card {
-  width: 200px;
-  height: 300px;
-  background: #222;
-  border-radius: 10px;
+
+/* Meta tags */
+.hero-meta {
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  display: flex;
+  gap: 1.2rem;
+  color: #bbb;
+}
+
+/* Progress bar */
+.braflix-progress {
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.braflix-progress-indicator {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.3s ease-in-out;
 }
