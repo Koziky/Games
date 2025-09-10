@@ -2,10 +2,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".nav-links button");
   const cards = document.querySelectorAll(".game-card");
+  const modal = document.getElementById("gameModal");
+  const modalFrame = document.getElementById("modalGameFrame");
+  const closeBtn = document.getElementById("closeModal");
 
+  // Filtering
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-      // Remove active class
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
@@ -19,5 +22,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+  });
+
+  // Open modal with game
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const src = card.getAttribute("data-src");
+      modalFrame.src = src;
+      modal.classList.remove("hidden");
+    });
+  });
+
+  // Close modal
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modalFrame.src = ""; // stop game
   });
 });
