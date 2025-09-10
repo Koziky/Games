@@ -8,14 +8,10 @@
 </head>
 <body>
   <!-- Header -->
-  <header>
-    <div class="nav-left">
-      <input type="text" id="searchBar" placeholder="Search games...">
-    </div>
-    
-    <h1 class="logo">Kozy <span>Games</span></h1>
-    
-    <nav class="nav-center">
+  <header class="navbar">
+    <input type="text" id="searchInput" placeholder="Search games..." />
+    <h1 class="logo">Kozy Games</h1>
+    <nav class="nav-links">
       <a href="#" data-category="all">Home</a>
       <a href="#" data-category="shooting">Shooting</a>
       <a href="#" data-category="running">Running</a>
@@ -25,29 +21,13 @@
   </header>
 
   <!-- Game Grid -->
-  <main>
-    <div class="game-grid">
-      <div class="game-card" data-category="cars" data-src="games/cars-arena.html">
-        <img src="thumbnails/cars-arena.png" alt="Cars Arena">
-        <h3>Cars Arena</h3>
-      </div>
-
-      <div class="game-card" data-category="tower" data-src="games/bubble-tower.html">
-        <img src="thumbnails/bubble-tower.png" alt="Bubble Tower 3D">
-        <h3>Bubble Tower 3D</h3>
-      </div>
-
-      <div class="game-card" data-category="running" data-src="games/run-sausage.html">
-        <img src="thumbnails/run-sausage.png" alt="Run Sausage Run">
-        <h3>Run Sausage Run</h3>
-      </div>
-    </div>
-  </main>
+  <main id="gameGrid" class="game-grid"></main>
 
   <!-- Modal -->
   <div id="gameModal" class="modal hidden">
     <div class="modal-content">
-      <span id="closeModal">&times;</span>
+      <span class="close-btn" onclick="closeGame()">×</span>
+      <h2 id="gameTitle"></h2>
       <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
