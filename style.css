@@ -3,107 +3,167 @@
   --foreground: hsl(0 0% 96%);
   --primary: hsl(0 86% 58%);
   --primary-hover: hsl(0 86% 52%);
-  --primary-foreground: hsl(0 0% 98%);
   --secondary: hsl(0 0% 18%);
   --secondary-hover: hsl(0 0% 22%);
-  --secondary-foreground: hsl(0 0% 92%);
-  --card-glass: hsl(0 0% 12% / 0.6);
-  --border-subtle: hsl(0 0% 18% / 0.4);
-  --border-glow: hsl(0 86% 58% / 0.2);
   --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
-  --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.3);
   --shadow-glow: 0 0 30px hsl(0 86% 58% / 0.2);
-  --gradient-primary: linear-gradient(135deg, hsl(0 86% 58%) 0%, hsl(350 86% 65%) 100%);
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: Arial, sans-serif;
   background: var(--background);
   color: var(--foreground);
 }
 
-/* Logo */
-.braflix-logo {
-  font-size: 2rem;
-  font-weight: 900;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Navbar Glass */
+/* Navbar */
 .nav-glass {
-  background: hsl(0 0% 8% / 0.8);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-glass);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
-
-/* Buttons */
-.btn-play {
-  background: var(--gradient-primary);
-  color: var(--primary-foreground);
-  font-weight: 600;
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border-glow);
-  box-shadow: var(--shadow-card);
-  transition: all 0.3s ease;
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
 }
-.btn-play:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-glow), var(--shadow-card);
+.braflix-logo {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: hsl(0 86% 58%);
 }
-
-.btn-secondary {
-  background: hsl(0 0% 20% / 0.6);
-  color: var(--secondary-foreground);
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border-subtle);
-  transition: all 0.3s ease;
-}
-.btn-secondary:hover {
-  background: var(--secondary-hover);
-  transform: scale(1.05);
-  border-color: var(--border-glow);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: hsl(0 0% 68%);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-}
-.btn-ghost:hover {
+.nav-links a {
+  margin: 0 1rem;
+  text-decoration: none;
   color: var(--foreground);
-  background: hsl(0 0% 20% / 0.6);
-  transform: scale(1.05);
+  font-weight: 500;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.search-input {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  background: #111;
+  color: white;
 }
 
 /* Hero */
-.hero-banner {
-  background: linear-gradient(180deg, transparent 0%, hsl(0 0% 6%) 100%);
+.hero {
   position: relative;
-  overflow: hidden;
+  height: 90vh;
+  background-size: cover;
+  background-position: center;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
 }
-
-/* Progress */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 10;
+  padding: 4rem;
+  max-width: 600px;
+}
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.hero-title span {
+  color: var(--primary);
+}
+.hero-desc {
+  margin: 1rem 0 2rem;
+  line-height: 1.5;
+  color: #ddd;
+}
+.hero-buttons button {
+  margin-right: 1rem;
+}
+.hero-meta {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  display: flex;
+  gap: 1rem;
+  color: #aaa;
+}
+.match {
+  color: #21d07a;
+  font-weight: bold;
+}
+.continue {
+  margin-top: 1rem;
+}
 .braflix-progress {
-  height: 8px;
-  border-radius: 4px;
-  background: hsl(0 0% 22%);
+  height: 4px;
+  background: #333;
+  border-radius: 2px;
   overflow: hidden;
 }
 .braflix-progress-indicator {
   height: 100%;
-  background: var(--gradient-primary);
-  border-radius: 4px;
-  box-shadow: 0 0 8px var(--shadow-glow);
-  transition: width 0.3s ease;
+  background: var(--primary);
+}
+
+/* Buttons */
+.btn-play {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-play:hover { background: var(--primary-hover); }
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid #444;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: var(--secondary-hover); }
+.btn-ghost {
+  background: none;
+  color: #aaa;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  cursor: pointer;
+}
+.btn-ghost:hover { color: white; }
+
+/* Sections */
+.section {
+  padding: 2rem 3rem;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.section-header h3 {
+  font-size: 1.5rem;
+}
+.carousel {
+  display: flex;
+  gap: 1rem;
+}
+.movie-card {
+  width: 200px;
+  height: 300px;
+  background: #222;
+  border-radius: 10px;
 }
