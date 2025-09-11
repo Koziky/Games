@@ -1,43 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Kozy Games</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
   <header>
-    <h1 class="logo">Kozy Games</h1>
-    <nav>
-      <button data-category="all">All</button>
-      <button data-category="shooting">Shooting</button>
-      <button data-category="running">Running</button>
-      <button data-category="tower">Tower Defense</button>
-    </nav>
+    <h1>Kozy Games</h1>
   </header>
 
-  <!-- Game Grid -->
-  <main id="gameGrid">
-    <!-- Cars Arena -->
-    <div class="game-card" data-category="running" data-src="https://html5.gamedistribution.com/0cf1c20b9c734d17b52db6e69aa1233b/">
-      <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
-      <h3>Cars Arena</h3>
-    </div>
+  <!-- Game buttons -->
+  <nav id="game-list">
+    <button data-src="https://play.famobi.com/cars-arena/A1000-10B">Cars Arena</button>
+    <button data-src="https://play.famobi.com/tunnel-rush/A1000-10B">Tunnel Rush</button>
+    <button data-src="https://play.famobi.com/stack/A1000-10B">Stack</button>
+  </nav>
 
-    <!-- Tunnel Rush -->
-    <div class="game-card" data-category="running" data-src="https://html5.gamedistribution.com/f8cdb30a2c234ab588d395b85cdbb741/">
-      <img src="https://img.famobi.com/tunnel-rush/cover" alt="Tunnel Rush">
-      <h3>Tunnel Rush</h3>
-    </div>
+  <!-- Game container -->
+  <main id="gameContainer">
+    <iframe id="game-iframe" src="https://play.famobi.com/cars-arena/A1000-10B"></iframe>
   </main>
-
-  <!-- Modal -->
-  <div id="gameModal" class="modal">
-    <span class="close">&times;</span>
-    <iframe id="gameFrame" frameborder="0" allowfullscreen></iframe>
-  </div>
 
   <script src="script.js"></script>
 </body>
