@@ -21,15 +21,48 @@
     nav a:hover { color: red; }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .search-bar {
-      background: #222; border-radius: 20px; padding: 5px 12px;
+      background: rgba(30,30,30,0.8);
+      border-radius: 25px;
+      padding: 6px 15px;
       display: flex; align-items: center;
     }
     .search-bar input {
-      background: none; border: none; color: white; outline: none;
+      background: none; border: none; color: white;
+      outline: none; width: 160px; font-size: 14px;
     }
     .icon-btn { cursor: pointer; font-size: 20px; transition: 0.2s; }
     .icon-btn:hover { color: red; }
     .profile-icon { background: red; padding: 8px; border-radius: 50%; }
+
+    /* Hero Section */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      background: black;
+      display: flex;
+      align-items: flex-end;
+      padding: 40px;
+      background-size: cover;
+      background-position: center;
+    }
+    #hero-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    }
+    #hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+    #hero h1 { font-size: 40px; margin-bottom: 10px; }
+    #hero p { font-size: 16px; margin-bottom: 20px; }
+    .hero-buttons { display: flex; gap: 15px; }
+    .hero-btn {
+      background: red; border: none; padding: 10px 20px;
+      border-radius: 6px; color: white; font-size: 16px; cursor: pointer;
+    }
+    .hero-btn.secondary { background: rgba(255,255,255,0.2); }
 
     /* Grid */
     #gameGrid {
@@ -44,21 +77,24 @@
       padding: 15px; display: flex; flex-direction: column;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      height: 380px; /* taller */
-      cursor: pointer;
+      height: 380px; cursor: pointer;
     }
     .game-card:hover { transform: scale(1.04); box-shadow: 0 6px 20px rgba(255,0,0,0.4); }
     .game-card img {
-      width: 100%; height: 220px; object-fit: cover;
+      width: 100%; height: 180px; object-fit: cover;
       border-radius: 8px; margin-bottom: 14px;
     }
-    .game-card h3 { font-size: 18px; margin-bottom: 10px; }
+    .game-card h3 { font-size: 18px; }
+    .divider {
+      height: 1px; background: #333; margin: 8px 0;
+    }
+    .game-card p { font-size: 13px; color: #bbb; flex-grow: 1; }
 
     .save-btn {
       background: red; color: white; border: none;
       padding: 4px 10px; border-radius: 6px;
       cursor: pointer; font-size: 13px;
-      transition: 0.2s; margin-top: auto; width: fit-content;
+      transition: 0.2s; width: fit-content;
     }
     .save-btn.saved { background: green; }
     .save-btn.saved::after { content: " ✅"; }
@@ -109,6 +145,19 @@
     </div>
   </header>
 
+  <!-- Hero Section -->
+  <section id="hero">
+    <div id="hero-overlay"></div>
+    <div id="hero-content">
+      <h1 id="heroTitle">Featured Game</h1>
+      <p id="heroDesc">Most played game will appear here.</p>
+      <div class="hero-buttons">
+        <button class="hero-btn" onclick="playFeatured()">▶ Play Now</button>
+        <button class="hero-btn secondary" onclick="showPage('saved')">+ My List</button>
+      </div>
+    </div>
+  </section>
+
   <main><div id="gameGrid"></div></main>
 
   <!-- Modal -->
@@ -151,7 +200,11 @@
     const modalTitle = document.getElementById("modalTitle");
     const modalDesc = document.getElementById("modalDesc");
     const saveInsideBtn = document.getElementById("saveInsideBtn");
+    const hero = document.getElementById("hero");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroDesc = document.getElementById("heroDesc");
     let savedGames = JSON.parse(localStorage.getItem("savedGames") || "[]");
+    let playCounts = JSON.parse(localStorage.getItem("playCounts") || "{}");
     let currentGame = null;
     let currentPage = "home";
 
@@ -172,6 +225,8 @@
         card.innerHTML = `
           <img src="${game.img}" alt="${game.name}">
           <h3>${game.name}</h3>
+          <div class="divider"></div>
+          <p>${game.description}</p>
           <button class="save-btn ${savedGames.includes(game.name) ? "saved" : ""}">Save</button>
         `;
         card.querySelector(".save-btn").addEventListener("click", (e) => {
@@ -182,6 +237,8 @@
         card.addEventListener("click", () => openGame(game));
         grid.appendChild(card);
       });
+
+      updateHero();
     }
 
     function openGame(game) {
@@ -190,7 +247,12 @@
       modalTitle.textContent = game.name;
       modalDesc.textContent = game.description;
       gameFrame.src = game.url;
+
+      playCounts[game.name] = (playCounts[game.name] || 0) + 1;
+      localStorage.setItem("playCounts", JSON.stringify(playCounts));
+
       updateSaveButton();
+      updateHero();
     }
 
     function closeGame() {
@@ -233,6 +295,38 @@
 
     function searchGames() {
       renderGames();
+    }
+
+    function updateHero() {
+      let mostPlayed = null;
+      let maxPlays = 0;
+      for (const g of games) {
+        const plays = playCounts[g.name] || 0;
+        if (plays > maxPlays) {
+          maxPlays = plays;
+          mostPlayed = g;
+        }
+      }
+      if (mostPlayed) {
+        hero.style.backgroundImage = `url('${mostPlayed.img}')`;
+        heroTitle.textContent = mostPlayed.name;
+        heroDesc.textContent = mostPlayed.description;
+      }
+    }
+
+    function playFeatured() {
+      let mostPlayed = null;
+      let maxPlays = 0;
+      for (const g of games) {
+        const plays = playCounts[g.name] || 0;
+        if (plays > maxPlays) {
+          maxPlays = plays;
+          mostPlayed = g;
+        }
+      }
+      if (mostPlayed) {
+        openGame(mostPlayed);
+      }
     }
 
     renderGames();
