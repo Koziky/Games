@@ -9,28 +9,27 @@
 <body>
   <header>
     <h1>Kozy Games</h1>
+    <nav>
+      <button data-category="all">All</button>
+      <button data-category="running">Running</button>
+    </nav>
   </header>
 
-  <!-- Game Grid -->
   <main id="gameGrid">
-    <!-- Example Game Cards -->
-    <div class="game-card" data-src="games/cars-arena/index.html">
-      <img src="thumbnails/cars-arena.jpg" alt="Cars Arena">
+    <!-- Cars Arena -->
+    <div class="game-card" data-category="running" data-src="https://play.famobi.com/cars-arena/A1000-10A">
+      <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
       <h3>Cars Arena</h3>
     </div>
 
-    <div class="game-card" data-src="games/tunnel-rush/index.html">
-      <img src="thumbnails/tunnel-rush.jpg" alt="Tunnel Rush">
+    <!-- Tunnel Rush (example famobi link placeholder) -->
+    <div class="game-card" data-category="running" data-src="https://play.famobi.com/tunnel-rush/A1000-10A">
+      <img src="https://img.famobi.com/tunnel-rush/cover" alt="Tunnel Rush">
       <h3>Tunnel Rush</h3>
-    </div>
-
-    <div class="game-card" data-src="games/stack/index.html">
-      <img src="thumbnails/stack.jpg" alt="Stack">
-      <h3>Stack</h3>
     </div>
   </main>
 
-  <!-- Modal for Games -->
+  <!-- Modal -->
   <div id="gameModal" class="modal">
     <span class="close">&times;</span>
     <iframe id="gameFrame" frameborder="0" allowfullscreen></iframe>
