@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kozy Games</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -11,17 +11,30 @@
     <h1>Kozy Games</h1>
   </header>
 
-  <!-- Game buttons -->
-  <nav id="game-list">
-    <button data-src="https://play.famobi.com/cars-arena/A1000-10B">Cars Arena</button>
-    <button data-src="https://play.famobi.com/tunnel-rush/A1000-10B">Tunnel Rush</button>
-    <button data-src="https://play.famobi.com/stack/A1000-10B">Stack</button>
-  </nav>
+  <!-- Game Grid -->
+  <main id="gameGrid">
+    <!-- Example Game Cards -->
+    <div class="game-card" data-src="games/cars-arena/index.html">
+      <img src="thumbnails/cars-arena.jpg" alt="Cars Arena">
+      <h3>Cars Arena</h3>
+    </div>
 
-  <!-- Game container -->
-  <main id="gameContainer">
-    <iframe id="game-iframe" src="https://play.famobi.com/cars-arena/A1000-10B"></iframe>
+    <div class="game-card" data-src="games/tunnel-rush/index.html">
+      <img src="thumbnails/tunnel-rush.jpg" alt="Tunnel Rush">
+      <h3>Tunnel Rush</h3>
+    </div>
+
+    <div class="game-card" data-src="games/stack/index.html">
+      <img src="thumbnails/stack.jpg" alt="Stack">
+      <h3>Stack</h3>
+    </div>
   </main>
+
+  <!-- Modal for Games -->
+  <div id="gameModal" class="modal">
+    <span class="close">&times;</span>
+    <iframe id="gameFrame" frameborder="0" allowfullscreen></iframe>
+  </div>
 
   <script src="script.js"></script>
 </body>
