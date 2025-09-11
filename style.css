@@ -6,31 +6,45 @@ body {
 }
 
 header {
-  background: #222;
-  padding: 15px;
+  background: #111;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 header h1 {
   margin: 0;
+  font-size: 1.5rem;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
 }
 
 nav button {
-  background: #444;
+  background: #333;
   border: none;
   padding: 8px 15px;
-  margin: 0 5px;
   border-radius: 8px;
   color: white;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+nav button:hover {
+  background: #555;
 }
 
 #gameGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  gap: 20px;
   padding: 20px;
 }
 
@@ -39,18 +53,25 @@ nav button {
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-align: center;
 }
 
 .game-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
 .game-card img {
   width: 100%;
   height: 150px;
   object-fit: cover;
+}
+
+.game-card h3 {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #f1f1f1;
 }
 
 .modal {
@@ -63,13 +84,15 @@ nav button {
   background: rgba(0, 0, 0, 0.9);
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .modal iframe {
-  width: 80%;
-  height: 80%;
+  width: 70%;
+  height: 70%;
   border: none;
   border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
 }
 
 .close {
@@ -78,4 +101,11 @@ nav button {
   right: 40px;
   font-size: 40px;
   cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.close:hover {
+  color: #f44336;
 }
