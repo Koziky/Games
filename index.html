@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kozy Games</title>
+  <title>KOZYGAMES</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', Arial, sans-serif; }
     body { background: #111; color: white; min-height: 100vh; }
 
     /* Header */
@@ -15,62 +15,50 @@
       display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 10;
     }
-    .logo {
-      font-size: 26px; font-weight: bold; color: red; letter-spacing: 2px;
-    }
-    nav {
-      display: flex; gap: 25px;
-    }
-    nav a {
-      color: white; text-decoration: none; font-size: 16px;
-      transition: 0.2s;
-    }
+    .logo { font-size: 26px; font-weight: bold; color: red; letter-spacing: 2px; }
+    nav { display: flex; gap: 25px; }
+    nav a { color: white; text-decoration: none; font-size: 16px; transition: 0.2s; }
     nav a:hover { color: red; }
-    .nav-right {
-      display: flex; align-items: center; gap: 20px;
-    }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
     .search-bar {
       background: #222; border-radius: 20px; padding: 5px 12px;
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center;
     }
     .search-bar input {
       background: none; border: none; color: white; outline: none;
     }
-    .icon-btn {
-      cursor: pointer; font-size: 20px; transition: 0.2s;
-    }
+    .icon-btn { cursor: pointer; font-size: 20px; transition: 0.2s; }
     .icon-btn:hover { color: red; }
-    .profile-icon {
-      background: red; padding: 8px; border-radius: 50%;
-    }
+    .profile-icon { background: red; padding: 8px; border-radius: 50%; }
 
     /* Grid */
     #gameGrid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 28px; padding: 40px;
     }
 
     /* Game Card */
     .game-card {
-      background: #181a1f; border-radius: 14px; padding: 20px;
-      display: flex; flex-direction: column;
+      background: #181a1f; border-radius: 14px;
+      padding: 15px; display: flex; flex-direction: column;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      height: 380px; /* taller */
       cursor: pointer;
     }
-    .game-card:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255,0,0,0.4); }
+    .game-card:hover { transform: scale(1.04); box-shadow: 0 6px 20px rgba(255,0,0,0.4); }
     .game-card img {
-      width: 100%; height: 200px; object-fit: cover;
+      width: 100%; height: 220px; object-fit: cover;
       border-radius: 8px; margin-bottom: 14px;
     }
-    .game-card h3 { font-size: 20px; margin-bottom: 10px; }
+    .game-card h3 { font-size: 18px; margin-bottom: 10px; }
 
     .save-btn {
       background: red; color: white; border: none;
-      padding: 6px 12px; border-radius: 6px;
-      cursor: pointer; font-size: 14px; margin-top: auto;
-      transition: 0.2s;
+      padding: 4px 10px; border-radius: 6px;
+      cursor: pointer; font-size: 13px;
+      transition: 0.2s; margin-top: auto; width: fit-content;
     }
     .save-btn.saved { background: green; }
     .save-btn.saved::after { content: " ✅"; }
@@ -89,17 +77,11 @@
       padding: 20px; position: relative;
       display: flex; flex-direction: column; gap: 15px;
     }
-    .modal-header { 
-      display: flex; justify-content: space-between; align-items: center;
-    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; }
     .modal-header h2 { font-size: 22px; }
-    .close {
-      font-size: 28px; cursor: pointer; color: #aaa;
-    }
+    .close { font-size: 28px; cursor: pointer; color: #aaa; }
     .close:hover { color: red; }
-    .modal-content iframe {
-      width: 100%; height: 500px; border-radius: 8px;
-    }
+    .modal-content iframe { width: 100%; height: 500px; border-radius: 8px; }
     .fullscreen-btn, .save-btn-inside {
       background: red; color: white; border: none;
       padding: 6px 12px; border-radius: 6px;
@@ -112,15 +94,15 @@
 </head>
 <body>
   <header>
-    <div class="logo">KOZYFLIX</div>
+    <div class="logo">KOZYGAMES</div>
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Games</a>
-      <a href="#">Saved</a>
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('games')">Games</a>
+      <a href="#" onclick="showPage('saved')">Saved</a>
     </nav>
     <div class="nav-right">
       <div class="search-bar">
-        <input type="text" placeholder="Search...">
+        <input type="text" id="searchInput" placeholder="Search..." oninput="searchGames()">
       </div>
       <span class="icon-btn">🔔</span>
       <span class="profile-icon">👤</span>
@@ -171,10 +153,20 @@
     const saveInsideBtn = document.getElementById("saveInsideBtn");
     let savedGames = JSON.parse(localStorage.getItem("savedGames") || "[]");
     let currentGame = null;
+    let currentPage = "home";
 
     function renderGames() {
       grid.innerHTML = "";
-      games.forEach(game => {
+      let list = games;
+
+      if (currentPage === "saved") {
+        list = games.filter(g => savedGames.includes(g.name));
+      }
+
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      list = list.filter(g => g.name.toLowerCase().includes(search));
+
+      list.forEach(game => {
         const card = document.createElement("div");
         card.className = "game-card";
         card.innerHTML = `
@@ -231,13 +223,16 @@
     function toggleFullscreen() {
       if (gameFrame.requestFullscreen) {
         gameFrame.requestFullscreen();
-      } else if (gameFrame.mozRequestFullScreen) {
-        gameFrame.mozRequestFullScreen();
-      } else if (gameFrame.webkitRequestFullscreen) {
-        gameFrame.webkitRequestFullscreen();
-      } else if (gameFrame.msRequestFullscreen) {
-        gameFrame.msRequestFullscreen();
       }
+    }
+
+    function showPage(page) {
+      currentPage = page;
+      renderGames();
+    }
+
+    function searchGames() {
+      renderGames();
     }
 
     renderGames();
