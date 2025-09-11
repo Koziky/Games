@@ -1,255 +1,647 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KozyGames</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #0f0f0f;
-      color: white;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KOZYGAMES</title>
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background: black;
-    }
+<!-- Google font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    header h1 {
-      color: red;
-      margin: 0;
-      font-size: 20px;
-    }
+<style>
+  :root{
+    --bg:#0f0f10;
+    --panel:#17181a;
+    --muted:#bfc4c8;
+    --accent:#ff1f1f;
+    --accent-dark:#b21919;
+    --card-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    --glass: rgba(255,255,255,0.02);
+    --radius:12px;
+  }
 
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: white;
-    }
+  html,body { height:100%; margin:0; font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: linear-gradient(180deg,#0b0b0c 0%, #0f0f10 100%); color:#e6e6e6; }
 
-    .search-bar {
-      background: #1a1a1a;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 12px;
-      color: white;
-      outline: none;
-    }
+  /* TOP BAR */
+  header.topbar{
+    height:78px;
+    display:flex;
+    align-items:center;
+    padding: 0 28px;
+    gap:24px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.35));
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.02);
+    position:sticky; top:0; z-index:40;
+  }
+  .brand { color:var(--accent); font-weight:800; letter-spacing:0.06em; font-size:24px; margin-right:6px; }
+  nav.menu { display:flex; gap:22px; align-items:center; flex:1; justify-content:center; }
+  nav.menu a { color:#ddd; text-decoration:none; font-weight:500; opacity:0.9; }
+  nav.menu a:hover { color:#fff; }
 
-    .featured {
-      display: flex;
-      gap: 20px;
-      padding: 30px;
-      align-items: center;
-    }
+  .rightbar { display:flex; gap:14px; align-items:center; margin-left:auto; }
+  .searchWrap { display:flex; align-items:center; gap:10px; background: rgba(255,255,255,0.02); padding:8px 12px; border-radius:34px; min-width:260px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+  .searchWrap input { background:transparent; border:0; outline:none; color:#ddd; font-size:14px; width:160px; }
+  .iconBtn { width:36px; height:36px; border-radius:8px; display:grid;place-items:center; background:transparent; border:0; cursor:pointer; }
+  .iconBtn.notify { background:linear-gradient(180deg,#ffd84d,#ffc400); width:36px; height:36px; border-radius:50%; }
+  .iconBtn.user { background: linear-gradient(90deg,#ff3b3b,#ff1f1f); width:36px;height:36px; border-radius:50%; }
 
-    .featured img {
-      width: 400px;
-      border-radius: 12px;
-    }
+  /* container */
+  .container { padding:28px 40px 80px; max-width:1280px; margin:0 auto; }
 
-    .featured-info {
-      max-width: 600px;
-      background: #141414;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-    }
+  /* featured big card (top) */
+  .featured {
+    display:flex;
+    gap:28px;
+    align-items:center;
+    margin-bottom:28px;
+  }
+  .featured .art {
+    width:460px;
+    min-height:240px;
+    border-radius:14px;
+    overflow:hidden;
+    background:#111;
+    box-shadow: var(--card-shadow);
+    border:1px solid rgba(255,255,255,0.02);
+    background-size:cover;
+    background-position:center;
+  }
+  .featured .meta {
+    flex:1;
+    padding:22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+    border-radius:14px;
+    box-shadow: var(--card-shadow);
+  }
+  .featured h2 { margin:4px 0 10px; font-size:28px; text-transform:lowercase; font-weight:800; color:#fff; }
+  .featured .sub { color:var(--muted); margin-bottom:12px; font-size:14px; }
+  .sep { height:1px; background:rgba(255,255,255,0.03); margin:12px 0; border-radius:2px; }
+  .featured .desc { color: #cfcfcf; line-height:1.5; margin-bottom:14px; font-size:15px; max-width:640px; }
 
-    .featured-info h2 {
-      margin: 0 0 10px 0;
-      font-size: 28px;
-      text-transform: capitalize;
-    }
+  .featured .controls { display:flex; gap:12px; align-items:center; margin-top:8px; }
+  .btn {
+    padding:10px 16px; border-radius:10px; border:0; cursor:pointer; font-weight:600; font-size:14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .btn.play { background: linear-gradient(90deg,#ff4a4a,#ff1f1f); color:white; display:flex; gap:10px; align-items:center; }
+  .btn.save { background:#1f2326; color:#fff; border:1px solid rgba(255,255,255,0.03); padding:10px 14px; }
 
-    .featured-info p {
-      margin: 10px 0;
-      color: #ccc;
-    }
+  /* grid of cards */
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:20px; margin-top:18px; }
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+    border-radius:14px;
+    padding:12px;
+    box-shadow: var(--card-shadow);
+    position:relative;
+    overflow:visible;
+    min-height: 330px; /* taller */
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+  }
 
-    .line {
-      border-bottom: 1px solid #333;
-      margin: 10px 0;
-    }
+  /* red corner accent (top-left) */
+  .card::before {
+    content:"";
+    position:absolute; left:0; top:0;
+    width:60%; height:36%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    border-top-left-radius:14px;
+    border-bottom-right-radius:40px;
+    opacity:0.14;
+    pointer-events:none;
+  }
 
-    .featured-buttons {
-      margin-top: 10px;
-    }
+  .thumbWrap {
+    height:170px;
+    border-radius:10px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: #121416;
+    margin-bottom:12px;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .thumbWrap img { width:100%; height:100%; object-fit:cover; display:block; }
 
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-right: 10px;
-      font-weight: bold;
-    }
+  .card h3 { margin:0; font-size:18px; font-weight:700; color:#fff; text-align:left; margin-bottom:8px; }
+  .card .desc { color:var(--muted); font-size:13px; line-height:1.4; max-height:72px; overflow:hidden; margin-bottom:10px; }
+  .card .line { height:1px; background:rgba(255,255,255,0.03); margin:8px 0; border-radius:4px; }
 
-    .play-btn {
-      background: red;
-      color: white;
-    }
+  .card .bottomRow { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .saveSmall {
+    padding:8px 10px; border-radius:8px; background:var(--accent); color:#fff; font-weight:600; font-size:13px; border:0; cursor:pointer;
+    display:inline-flex; gap:8px; align-items:center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+  .saveSmall.saved { background:linear-gradient(90deg,#28c76f,#13b257); }
 
-    .save-btn {
-      background: #2e2e2e;
-      color: white;
-    }
+  .metaSmall { color:var(--muted); font-size:13px; display:flex; gap:10px; align-items:center; }
 
-    .games-section {
-      padding: 30px;
-    }
+  .badgeNew { background:#ff3b3b; color:#fff; padding:4px 8px; border-radius:20px; font-size:12px; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
-    .games-section h2 {
-      margin-bottom: 15px;
-    }
+  /* modal */
+  .modal {
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:60;
+    background:rgba(0,0,0,0.6);
+    padding:28px;
+  }
+  .modalCard {
+    width:100%; max-width:1100px; height:80vh; background:#0e1113; border-radius:14px; overflow:hidden; display:flex; flex-direction:column; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  }
+  .modalHeader { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.03); }
+  .modalHeader h3 { margin:0; font-size:18px; text-transform:lowercase; }
+  .modalBody { flex:1; display:flex; gap:12px; padding:16px; }
+  .modalLeft { flex:1; background:#0b0c0d; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .gameIframe { width:100%; height:100%; border:0; background:#000; }
+  .modalRight { width:320px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+  .modalRight .desc { color:var(--muted); font-size:14px; }
+  .modalFooter { display:flex; gap:12px; padding:12px; justify-content:flex-end; border-top:1px solid rgba(255,255,255,0.03); }
+  .btn.small { padding:8px 12px; border-radius:8px; font-size:13px; }
 
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-    }
+  /* responsive */
+  @media (max-width:980px){
+    .featured { flex-direction:column; gap:10px; }
+    .featured .art { width:100%; min-height:200px; }
+    .modalBody { flex-direction:column; }
+    .modalRight { width:100%; }
+  }
 
-    .game-card {
-      background: #141414;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
-      text-align: center;
-    }
-
-    .game-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .game-card h3 {
-      margin: 10px 0 5px;
-    }
-
-    .game-card p {
-      font-size: 14px;
-      color: #aaa;
-      min-height: 40px;
-    }
-
-    .plays {
-      font-size: 13px;
-      color: #888;
-      display: block;
-      margin: 8px 0;
-    }
-  </style>
+  /* subtle hover */
+  .card:hover{ transform: translateY(-6px); transition: all 220ms ease; }
+  .btn, .saveSmall { transition: transform 150ms ease, box-shadow 150ms ease; }
+  .btn:active, .saveSmall:active { transform:translateY(2px); }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>KOZYGAMES</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Games</a>
-      <a href="#">Saved</a>
-    </nav>
-    <input type="text" class="search-bar" placeholder="Search...">
-  </header>
+<header class="topbar">
+  <div class="brand">KOZYGAMES</div>
 
-  <section class="featured">
-    <img id="featured-img" src="" alt="Featured Game">
-    <div class="featured-info">
-      <h2 id="featured-title">Featured Game</h2>
-      <span id="featured-plays">-- plays</span>
-      <div class="line"></div>
-      <p id="featured-desc">Featured description will appear here — long descriptive copy describing the game.</p>
-      <div class="line"></div>
-      <p id="featured-release">Released: --</p>
-      <div class="featured-buttons">
-        <button class="btn play-btn" onclick="playGame(featuredGameId)">▶ Play Now</button>
-        <button class="btn save-btn" onclick="saveGame(featuredGameId)">+ Add To List</button>
+  <nav class="menu">
+    <a href="#" data-page="home">Home</a>
+    <a href="#" data-page="games">Games</a>
+    <a href="#" data-page="saved">Saved</a>
+  </nav>
+
+  <div class="rightbar">
+    <div class="searchWrap" title="Search games">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#cfcfcf" stroke-width="2"/></svg>
+      <input id="searchInput" placeholder="Search..." />
+    </div>
+
+    <button class="iconBtn notify" title="Notifications">
+      <!-- custom bell -->
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M15 17H9l-1-3V9a4 4 0 118 0v5l-1 3z" fill="#1b1b1b"></path><circle cx="12" cy="20" r="1.8" fill="#fff"></circle></svg>
+    </button>
+
+    <button class="iconBtn user" title="Profile">
+      <!-- custom person -->
+      <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3" fill="#fff"></circle><path d="M5 20a7 7 0 0114 0" fill="#fff" opacity="0.9"></path></svg>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- FEATURED / MOST PLAYED -->
+  <section class="featured" id="featuredSection" aria-live="polite">
+    <div class="art" id="featuredArt" style="background-image:url('https://img.cdn.famobi.com/portal/html5games/images/tmp/CarsArenaTeaser.jpg?v=0.2-50426de7');"></div>
+    <div class="meta">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h2 id="featuredTitle">Featured Game</h2>
+          <div class="sub" id="featuredPlays">-- plays</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn play" id="featuredPlayBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 3v18l15-9L5 3z" fill="#fff"/></svg> Play Now</button>
+          <button class="btn save" id="featuredSaveBtn">+ Add To List</button>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="desc" id="featuredDesc">Featured description will appear here — long descriptive copy describing the game, its genre, unique features, and why the community loves it. This area is used to highlight the most-played or featured game on the site.</div>
+
+      <div class="sep"></div>
+
+      <div style="display:flex;gap:10px;align-items:center;margin-top:12px;">
+        <div class="badgeNew" id="featuredNew" style="display:none;">NEW</div>
+        <div style="color:var(--muted);">Released: <span id="featuredDate">--</span></div>
+        <div style="margin-left:auto;color:var(--muted)">Most Played</div>
       </div>
     </div>
   </section>
 
-  <section class="games-section">
-    <h2>All Games</h2>
-    <div id="games-grid" class="games-grid"></div>
+  <!-- GRID -->
+  <section>
+    <div class="grid" id="gameGrid"></div>
   </section>
+</main>
 
-  <script>
-    let games = [
-      {
-        id: 1,
-        title: "Cars Arena",
-        description: "Battle cars in an arena and knock opponents out. Test your driving skills and survive!",
-        image: "https://i.imgur.com/3QKX5hF.jpg",
-        release: "2024",
-        plays: 0
-      },
-      {
-        id: 2,
-        title: "Tunnel Rush",
-        description: "Dodge incoming obstacles in a speedy tunnel. Precision and reflexes are everything.",
-        image: "https://i.imgur.com/4Qv8sQp.jpg",
-        release: "2023",
-        plays: 0
+<!-- MODAL -->
+<div class="modal" id="gameModal" aria-hidden="true">
+  <div class="modalCard" role="dialog" aria-modal="true">
+    <div class="modalHeader">
+      <h3 id="modalTitle">Game</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn small" id="modalSave">Save</button>
+        <button class="btn small" id="modalFull">Fullscreen</button>
+        <button class="btn small" id="modalClose">Close</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="modalLeft">
+        <iframe id="modalIframe" class="gameIframe" allow="autoplay; fullscreen; picture-in-picture" src=""></iframe>
+      </div>
+      <aside class="modalRight">
+        <div class="desc" id="modalDesc">Description</div>
+        <div class="line" style="height:1px;background:rgba(255,255,255,0.03)"></div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div style="color:var(--muted)">Plays: <strong id="modalPlays">0</strong></div>
+          <div style="margin-left:auto;color:var(--muted)">Released: <span id="modalDate">--</span></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="modalFooter">
+      <button class="btn" id="modalPlayInc">Play (Count +1)</button>
+      <button class="btn" id="modalClose2">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* -------------------------
+   Games dataset (edit here)
+   ------------------------- */
+const games = [
+  {
+    id: 'cars-arena',
+    title: 'Cars Arena',
+    desc: 'Fast-paced car combat arena. Battle other drivers in explosive tracks and collect upgrades to dominate the leaderboard.',
+    img: 'https://img.cdn.famobi.com/portal/html5games/images/tmp/CarsArenaTeaser.jpg?v=0.2-50426de7',
+    embed: 'https://play.famobi.com/cars-arena/A1000-10A',
+    released: '2025-09-02' // ISO date
+  },
+  {
+    id: 'tunnel-rush',
+    title: 'Tunnel Rush',
+    desc: 'Dodge incoming obstacles in a speedy tunnel. Precision and reflexes are everything — how far can you go?',
+    img: 'https://img.famobi.com/tunnel-rush/cover',
+    embed: 'https://html5.gamedistribution.com/f8cdb30a2c234ab588d395b85cdbb741/',
+    released: '2025-08-10'
+  },
+  /* add more games here */
+];
+
+/* -------------------------
+   Local storage helpers
+   ------------------------- */
+const LS_PLAYS = 'kg_plays_v1';
+const LS_SAVED = 'kg_saved_v1';
+function readPlays(){ return JSON.parse(localStorage.getItem(LS_PLAYS) || '{}'); }
+function savePlays(obj){ localStorage.setItem(LS_PLAYS, JSON.stringify(obj)); }
+function readSaved(){ return JSON.parse(localStorage.getItem(LS_SAVED) || '[]'); }
+function saveSaved(arr){ localStorage.setItem(LS_SAVED, JSON.stringify(arr)); }
+
+/* -------------------------
+   UI refs
+   ------------------------- */
+const grid = document.getElementById('gameGrid');
+const featuredArt = document.getElementById('featuredArt');
+const featuredTitle = document.getElementById('featuredTitle');
+const featuredDesc = document.getElementById('featuredDesc');
+const featuredPlays = document.getElementById('featuredPlays');
+const featuredDate = document.getElementById('featuredDate');
+const featuredNew = document.getElementById('featuredNew');
+const featuredPlayBtn = document.getElementById('featuredPlayBtn');
+const featuredSaveBtn = document.getElementById('featuredSaveBtn');
+
+const searchInput = document.getElementById('searchInput');
+
+const modal = document.getElementById('gameModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalIframe = document.getElementById('modalIframe');
+const modalPlays = document.getElementById('modalPlays');
+const modalDate = document.getElementById('modalDate');
+const modalSaveBtn = document.getElementById('modalSave');
+const modalFullBtn = document.getElementById('modalFull');
+const modalClose = document.getElementById('modalClose');
+const modalClose2 = document.getElementById('modalClose2');
+const modalPlayInc = document.getElementById('modalPlayInc');
+
+let currentGame = null;
+
+/* -------------------------
+   Initialize
+   ------------------------- */
+function init(){
+  renderGrid(games);
+  attachSearch();
+  renderFeatured();
+  attachHeaderNav();
+}
+init();
+
+/* -------------------------
+   RENDER GRID
+   ------------------------- */
+function renderGrid(list){
+  grid.innerHTML = '';
+  const plays = readPlays();
+  const saved = readSaved();
+
+  list.forEach(g => {
+    // create card
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.dataset.id = g.id;
+
+    const thumb = document.createElement('div');
+    thumb.className = 'thumbWrap';
+    const img = document.createElement('img');
+    img.src = g.img;
+    img.alt = g.title;
+    thumb.appendChild(img);
+
+    const h3 = document.createElement('h3');
+    h3.textContent = g.title;
+
+    const desc = document.createElement('div');
+    desc.className = 'desc';
+    desc.textContent = g.desc;
+
+    const line = document.createElement('div');
+    line.className = 'line';
+
+    const bottom = document.createElement('div');
+    bottom.className = 'bottomRow';
+
+    const metaSmall = document.createElement('div');
+    metaSmall.className = 'metaSmall';
+
+    // plays text
+    const playCount = plays[g.id] || 0;
+    const playsText = document.createElement('div');
+    playsText.textContent = formatPlays(playCount) + ' plays';
+    playsText.style.color = 'var(--muted)';
+    metaSmall.appendChild(playsText);
+
+    // release and new badge
+    const rel = document.createElement('div');
+    rel.style.marginLeft = '6px';
+    const daysSince = daysSinceDate(g.released);
+    if(daysSince <= 7){
+      const b = document.createElement('span');
+      b.className = 'badgeNew';
+      b.textContent = 'NEW';
+      rel.appendChild(b);
+    } else {
+      rel.textContent = ''; // no badge
+    }
+    metaSmall.appendChild(rel);
+
+    // save small button (outside)
+    const saveSmall = document.createElement('button');
+    saveSmall.className = 'saveSmall';
+    saveSmall.innerHTML = (saved.includes(g.id) ? '&#10003; Saved' : 'Save');
+    if(saved.includes(g.id)) saveSmall.classList.add('saved');
+    saveSmall.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      toggleSave(g.id);
+      // update button
+      const newSaved = readSaved();
+      const savedNow = newSaved.includes(g.id);
+      saveSmall.innerHTML = (savedNow ? '&#10003; Saved' : 'Save');
+      saveSmall.classList.toggle('saved', savedNow);
+      // if on Saved page, re-render navigation
+    });
+
+    // attach card inner elements
+    bottom.appendChild(metaSmall);
+    bottom.appendChild(saveSmall);
+
+    // when clicking card -> open modal
+    card.addEventListener('click', ()=>{
+      openModal(g);
+    });
+
+    // build node
+    card.appendChild(thumb);
+    card.appendChild(h3);
+    card.appendChild(desc);
+    card.appendChild(line);
+    card.appendChild(bottom);
+
+    // append
+    grid.appendChild(card);
+  });
+}
+
+/* -------------------------
+   FEATURED (most played)
+   ------------------------- */
+function renderFeatured(){
+  const plays = readPlays();
+  // find highest play; if none -> first
+  let top = games[0];
+  let topCount = plays[top.id] || 0;
+  games.forEach(g=>{
+    const c = plays[g.id] || 0;
+    if(c > topCount){ top = g; topCount = c; }
+  });
+
+  featuredArt.style.backgroundImage = `url('${top.img}')`;
+  featuredTitle.textContent = top.title;
+  featuredDesc.textContent = top.desc;
+  featuredPlays.textContent = formatPlays(topCount) + ' plays';
+  featuredDate.textContent = (top.released || '--');
+  const days = daysSinceDate(top.released);
+  featuredNew.style.display = (days <= 7 ? 'inline-block' : 'none');
+
+  // set featured controls to operate on top
+  featuredPlayBtn.onclick = () => { incrementPlay(top.id); renderFeatured(); renderGrid(games); openModal(top); };
+  featuredSaveBtn.onclick = () => {
+    toggleSave(top.id);
+    updateFeaturedSaveBtn(top.id);
+  };
+  updateFeaturedSaveBtn(top.id);
+
+  // store current featured for modal usage
+  currentGame = top;
+}
+
+/* -------------------------
+   MODAL
+   ------------------------- */
+function openModal(game){
+  currentGame = game;
+  modalTitle.textContent = game.title;
+  modalDesc.textContent = game.desc;
+  modalIframe.src = game.embed;
+  modalPlays.textContent = readPlays()[game.id] || 0;
+  modalDate.textContent = game.released || '---';
+  // save button state
+  const saved = readSaved();
+  const isSaved = saved.includes(game.id);
+  modalSaveBtn.textContent = isSaved ? '✔ Saved' : '+ Add To List';
+  modalSaveBtn.classList.toggle('saved', isSaved);
+
+  // show modal
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+}
+
+// modal controls
+modalClose.addEventListener('click', closeModal);
+modalClose2.addEventListener('click', closeModal);
+
+function closeModal(){
+  modal.style.display = 'none';
+  modalIframe.src = ''; // stop game
+  modal.setAttribute('aria-hidden','true');
+}
+
+modalSaveBtn.addEventListener('click', ()=>{
+  if(!currentGame) return;
+  toggleSave(currentGame.id);
+  const saved = readSaved();
+  const isSaved = saved.includes(currentGame.id);
+  modalSaveBtn.textContent = isSaved ? '✔ Saved' : '+ Add To List';
+  modalSaveBtn.classList.toggle('saved', isSaved);
+  renderGrid(games);
+});
+
+modalFullBtn.addEventListener('click', ()=> {
+  // try fullscreen the iframe container
+  const el = modalIframe;
+  if(el.requestFullscreen) el.requestFullscreen();
+  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+});
+
+modalPlayInc.addEventListener('click', ()=>{
+  if(!currentGame) return;
+  incrementPlay(currentGame.id);
+  modalPlays.textContent = readPlays()[currentGame.id] || 0;
+  renderGrid(games);
+  renderFeatured();
+});
+
+/* -------------------------
+   Data helpers
+   ------------------------- */
+function incrementPlay(id){
+  const p = readPlays();
+  p[id] = (p[id] || 0) + 1;
+  savePlays(p);
+  // update UI
+  renderFeatured();
+  renderGrid(games);
+}
+
+function formatPlays(n){
+  if(n >= 1_000_000) return (n/1_000_000).toFixed(1) + 'M';
+  if(n >= 1_000) return (n/1000).toFixed(1) + 'k';
+  return String(n);
+}
+
+function daysSinceDate(s){
+  if(!s) return 9999;
+  try{
+    const now = new Date();
+    const d = new Date(s);
+    const diff = Math.abs(now - d);
+    return Math.floor(diff / (1000*60*60*24));
+  }catch(e){ return 9999; }
+}
+
+/* -------------------------
+   Save toggles
+   ------------------------- */
+function toggleSave(id){
+  const arr = readSaved();
+  const idx = arr.indexOf(id);
+  if(idx === -1) arr.push(id);
+  else arr.splice(idx,1);
+  saveSaved(arr);
+  // update featured/save UI
+  updateFeaturedSaveBtn(id);
+  renderGrid(games);
+}
+
+function updateFeaturedSaveBtn(id){
+  const arr = readSaved();
+  const isSaved = arr.includes(id);
+  featuredSaveBtn.textContent = isSaved ? '✔ Saved' : '+ Add To List';
+  featuredSaveBtn.style.background = isSaved ? 'linear-gradient(90deg,#28c76f,#13b257)' : '';
+}
+
+/* -------------------------
+   Search / Pages
+   ------------------------- */
+function attachSearch(){
+  searchInput.addEventListener('input', (e)=>{
+    const q = e.target.value.trim().toLowerCase();
+    if(!q){
+      renderGrid(games);
+      return;
+    }
+    // filter title/desc
+    const filtered = games.filter(g => (g.title + ' ' + g.desc).toLowerCase().includes(q));
+    renderGrid(filtered);
+  });
+}
+
+/* header nav */
+function attachHeaderNav(){
+  document.querySelectorAll('nav.menu a').forEach(a=>{
+    a.addEventListener('click',(ev)=>{
+      ev.preventDefault();
+      const page = a.dataset.page;
+      if(page === 'saved'){
+        const saved = readSaved();
+        const arr = games.filter(g => saved.includes(g.id));
+        renderGrid(arr);
+        // update featured to top-most saved if any
+        if(arr.length) {
+          featuredArt.style.backgroundImage = `url('${arr[0].img}')`;
+          featuredTitle.textContent = arr[0].title;
+          featuredDesc.textContent = arr[0].desc;
+          featuredPlays.textContent = formatPlays((readPlays()[arr[0].id]||0)) + ' plays';
+          featuredDate.textContent = arr[0].released;
+        } else {
+          renderFeatured();
+        }
+      } else {
+        // default -> show all
+        renderGrid(games);
+        renderFeatured();
       }
-    ];
+    });
+  });
+}
 
-    let featuredGameId = games[0].id;
-
-    function renderFeatured() {
-      let game = games.find(g => g.id === featuredGameId);
-      document.getElementById("featured-img").src = game.image;
-      document.getElementById("featured-title").textContent = game.title;
-      document.getElementById("featured-desc").textContent = game.description;
-      document.getElementById("featured-release").textContent = "Released: " + game.release;
-      document.getElementById("featured-plays").textContent = game.plays + " plays";
+/* -------------------------
+   initial seed: ensure storage has keys (optional)
+   ------------------------- */
+(function seed(){
+  // if no plays saved, set small default numbers for demo
+  const p = readPlays();
+  let changed = false;
+  games.forEach((g,i)=>{
+    if(!(g.id in p)){
+      p[g.id] = Math.floor(Math.random()*5000) + (i*2000);
+      changed = true;
     }
-
-    function renderGames() {
-      const grid = document.getElementById("games-grid");
-      grid.innerHTML = "";
-
-      games.forEach(game => {
-        const card = document.createElement("div");
-        card.className = "game-card";
-        card.innerHTML = `
-          <img src="${game.image}" alt="${game.title}">
-          <h3>${game.title}</h3>
-          <p>${game.description}</p>
-          <span class="plays">${game.plays} plays</span>
-          <button class="btn save-btn" onclick="saveGame(${game.id})">Save</button>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function playGame(id) {
-      let game = games.find(g => g.id === id);
-      game.plays++;
-      updateFeatured();
-      renderGames();
-    }
-
-    function saveGame(id) {
-      alert("Game " + id + " saved to your list!");
-    }
-
-    function updateFeatured() {
-      let mostPlayed = games.reduce((a, b) => (a.plays > b.plays ? a : b));
-      featuredGameId = mostPlayed.id;
-      renderFeatured();
-    }
-
-    // Initial render
-    renderFeatured();
-    renderGames();
-  </script>
+  });
+  if(changed) savePlays(p);
+})();
+</script>
 
 </body>
 </html>
