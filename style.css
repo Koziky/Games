@@ -1,92 +1,51 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+
 body {
-  margin: 0;
+  background:#111;
+  color:#fff;
   font-family: Arial, sans-serif;
-  background: #111;
-  color: #fff;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
 header {
-  background: #222;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background:#222;
+  padding:10px;
+  text-align:center;
 }
 
-nav button {
-  margin: 0 5px;
-  padding: 0.5rem 1rem;
-  background: #444;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
+#game-list {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  background:#333;
+  padding:10px;
 }
 
-nav button:hover {
-  background: #666;
+#game-list button {
+  padding:8px 14px;
+  background:#444;
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
 }
 
-#gameGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+#game-list button:hover {
+  background:#666;
 }
 
-.game-card {
-  background: #222;
-  padding: 1rem;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s;
+#gameContainer {
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#000;
 }
 
-.game-card:hover {
-  transform: scale(1.05);
-}
-
-.game-card img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  position: relative;
-  width: 90%;
-  height: 90%;
-  background: #000;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-#gameFrame {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 2rem;
-  color: #fff;
-  cursor: pointer;
-  z-index: 1001;
+#game-iframe {
+  width:100%;
+  height:100%;
+  border:none;
 }
