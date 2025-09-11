@@ -1,51 +1,74 @@
-* { margin:0; padding:0; box-sizing:border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  background:#111;
-  color:#fff;
   font-family: Arial, sans-serif;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
+  background: #111;
+  color: #fff;
 }
 
 header {
-  background:#222;
-  padding:10px;
-  text-align:center;
+  background: #222;
+  padding: 20px;
+  text-align: center;
 }
 
-#game-list {
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  background:#333;
-  padding:10px;
+#gameGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
-#game-list button {
-  padding:8px 14px;
-  background:#444;
-  color:#fff;
-  border:none;
-  border-radius:5px;
-  cursor:pointer;
+.game-card {
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-align: center;
 }
 
-#game-list button:hover {
-  background:#666;
+.game-card img {
+  width: 100%;
+  display: block;
 }
 
-#gameContainer {
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#000;
+.game-card h3 {
+  padding: 10px;
+  background: #333;
 }
 
-#game-iframe {
-  width:100%;
-  height:100%;
-  border:none;
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal iframe {
+  width: 80%;
+  height: 80%;
+  border: none;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
 }
