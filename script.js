@@ -12,6 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "flex";
       }
     });
+
+    // Check release date for "NEW" badge
+    const releaseDate = new Date(card.getAttribute("data-release"));
+    const now = new Date();
+    const daysSinceRelease = (now - releaseDate) / (1000 * 60 * 60 * 24);
+
+    if (daysSinceRelease <= 7) {
+      card.querySelector(".badge-new").style.display = "inline-block";
+    }
   });
 
   // Close modal
