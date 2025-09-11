@@ -627,21 +627,19 @@ function attachHeaderNav(){
 }
 
 /* -------------------------
-   initial seed: ensure storage has keys (optional)
+   initial seed: ensure storage starts fresh
    ------------------------- */
 (function seed(){
-  // if no plays saved, set small default numbers for demo
+  // Always reset plays to 0 if not in storage
   const p = readPlays();
   let changed = false;
-  games.forEach((g,i)=>{
+  games.forEach((g)=> {
     if(!(g.id in p)){
-      p[g.id] = Math.floor(Math.random()*5000) + (i*2000);
+      p[g.id] = 0; // start fresh
       changed = true;
     }
   });
   if(changed) savePlays(p);
 })();
-</script>
 
-</body>
-</html>
+
