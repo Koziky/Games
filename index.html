@@ -1,40 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kozy Games</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Kozy Games</h1>
-    <nav>
-      <button data-category="all">All</button>
-      <button data-category="running">Running</button>
-    </nav>
-  </header>
-
-  <main id="gameGrid">
-    <!-- Cars Arena -->
-    <div class="game-card" data-category="running" data-src="https://play.famobi.com/cars-arena/A1000-10A">
-      <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
-      <h3>Cars Arena</h3>
+<main id="gameGrid">
+  <!-- Example Cards -->
+  <div class="game-card" 
+       data-src="https://play.famobi.com/cars-arena/A1000-10A" 
+       data-plays="12.3k"
+       data-release="2025-09-05">
+    <img src="https://img.famobi.com/cars-arena/cover" alt="Cars Arena">
+    <h3>Cars Arena</h3>
+    <div class="game-info">
+      <span class="plays">12.3k plays</span>
+      <span class="badge-new" style="display:none;">NEW</span>
     </div>
-
-    <!-- Tunnel Rush (example famobi link placeholder) -->
-    <div class="game-card" data-category="running" data-src="https://play.famobi.com/tunnel-rush/A1000-10A">
-      <img src="https://img.famobi.com/tunnel-rush/cover" alt="Tunnel Rush">
-      <h3>Tunnel Rush</h3>
-    </div>
-  </main>
-
-  <!-- Modal -->
-  <div id="gameModal" class="modal">
-    <span class="close">&times;</span>
-    <iframe id="gameFrame" frameborder="0" allowfullscreen></iframe>
   </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <div class="game-card" 
+       data-src="https://play.famobi.com/tunnel-rush/A1000-10A" 
+       data-plays="45.7k"
+       data-release="2025-08-15">
+    <img src="https://img.famobi.com/tunnel-rush/cover" alt="Tunnel Rush">
+    <h3>Tunnel Rush</h3>
+    <div class="game-info">
+      <span class="plays">45.7k plays</span>
+      <span class="badge-new" style="display:none;">NEW</span>
+    </div>
+  </div>
+</main>
